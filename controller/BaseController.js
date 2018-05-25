@@ -6,6 +6,7 @@ const symbolPrefix = Symbol('prefix')
 const routerMap = new Map()
 const isArray = c => _.isArray(c) ?c :[c]
 const R = require('ramda')
+let logTimes = 0
 export class BaseController {
     constructor (app,apiPath) {
         this.app = app
@@ -30,19 +31,18 @@ export class BaseController {
 
 const norrmalizePath = path => new RegExp('^\/').test(path) ? path : `/${path}`
 
-const changeToArr = R.unless(
+const toArray = R.unless(
     R.is(Array),
     R.of
   )
-
+//链接 中间件
 export const convert = middleware => (target, key, descriptor) => {
     target[key] = R.compose(
       R.concat(
-        changeToArr(middleware)
+        toArray(middleware)
       ),
-      changeToArr
+      toArray
     )(target[key])
-    return descriptor
 }
 
 const router = conf => (target,key,descriptor) => {
@@ -52,24 +52,24 @@ const router = conf => (target,key,descriptor) => {
         ...conf
     },target[key])
 }
-
+//Controller 修饰符
 export const Controller = path => target => {
     target.prototype[symbolPrefix] = path
 }
-
+//Get 修饰符
 export const Get = path => router({
     method: 'get',
     path: path
 })
-
+//Post 修饰符
 export const Post = path => router({
     method: 'post',
     path: path
 })
-
+// Log 修饰符
 export const Log = convert(async (ctx, next) => {
     logTimes++
     console.time(`${logTimes}: ${ctx.method} - ${ctx.url}`)
     await next()
     console.timeEnd(`${logTimes}: ${ctx.method} - ${ctx.url}`)
-  })
+})
