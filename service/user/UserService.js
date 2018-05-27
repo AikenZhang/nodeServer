@@ -1,14 +1,16 @@
-const { UserModel } = require('../..//model/user/UserModel.js')
+const { UserModel } = require('../../model/user/UserModel.js')
+const { MiniPro } =require('../../common/MiniPro.js')
 
 export class UserService {
-    //添加用户
-    async addUser () {
-        return new UserModel({
-            name: "zhang",
-            age: 18,
-            sex: "nan",
-            address: ["zhang","光"]
-        }).save()
+    //用户登陆
+    async login (code) {
+        const miniproService = new MiniPro()
+        let data = await miniproService.getOpenId(code)
+        return new Promise((resolve,rej) => {
+            if (data) {
+                resolve(data)
+            } 
+        })
     }
    
 }

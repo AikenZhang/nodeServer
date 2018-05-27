@@ -69,7 +69,7 @@ export const Post = path => router({
 // Log 修饰符
 export const Log = convert(async (ctx, next) => {
     logTimes++
-    console.time(`${logTimes}: ${ctx.method} - ${ctx.url}`)
+    console.time(`${logTimes}: ${ctx.method} - ${ctx.url} - ${ctx.request.body}`)
     await next()
-    console.timeEnd(`${logTimes}: ${ctx.method} - ${ctx.url}`)
+    console.timeEnd(`${logTimes}: ${ctx.method} - ${ctx.url} - ${ctx.request.body}`)
 })

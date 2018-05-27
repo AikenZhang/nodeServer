@@ -2,6 +2,7 @@ const Koa = require('koa')
 const R = require('ramda')
 const { resolve } = require('path')
 const { connect } = require('./database/MoDBConnection.js')
+const bodyParser = require('koa-bodyparser')
 const MIDDLEWARE = ['router']
 
 const useMiddleWares = (app) => {
@@ -19,6 +20,7 @@ const useMiddleWares = (app) => {
 (async () =>{
     await connect()
     const app = new Koa()
+    app.use(bodyParser())
     await useMiddleWares(app)
     app.listen(3345)
     console.log('starting in listen 3345')
