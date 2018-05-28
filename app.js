@@ -3,6 +3,7 @@ const R = require('ramda')
 const { resolve } = require('path')
 const { connect } = require('./database/MoDBConnection.js')
 const bodyParser = require('koa-bodyparser')
+const { Interception } = require('./common/Interception.js')
 const MIDDLEWARE = ['router']
 
 const useMiddleWares = (app) => {
@@ -18,9 +19,10 @@ const useMiddleWares = (app) => {
 }
 //启动监听
 (async () =>{
-    await connect()
+    //await connect()
     const app = new Koa()
     app.use(bodyParser())
+    app.use(Interception())
     await useMiddleWares(app)
     app.listen(3345)
     console.log('starting in listen 3345')

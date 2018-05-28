@@ -5,16 +5,6 @@ const { Result } = require('../../common/Result.js')
 const userService = new UserService()
 @Controller('/user')
 export class UserController {
-    @Get('/get')
-    @Log
-    async getName (cxt,next) {
-        let data=await userService.addUser()
-        if(data) {
-            console.log(data)
-            cxt.body='你成功了'
-        }
-       
-    }
     //用户登陆
     @Post('/login')
     @Log
