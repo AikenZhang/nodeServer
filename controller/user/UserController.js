@@ -2,6 +2,7 @@
 const { Controller,Get,Post, Log} = require('../BaseController.js')
 const { UserService } = require('../../service/user/UserService.js')
 const { Result } = require('../../common/Result.js')
+const { createToken , getOpenId} = require('../../common/MiniPro.js') 
 const userService = new UserService()
 @Controller('/user')
 export class UserController {
@@ -9,13 +10,24 @@ export class UserController {
     @Post('/login')
     @Log
     async login (ctx,next) {
-        const code = ctx.request.body.code 
+        let code = ctx.request.body.code 
+        let userInfo = ctx.request.body.userInfo
+        //获取openId
+        //保存详细信息
         let data = await userService.login(code)
-        console.log(data)
+        console.log(user)
+        let token =await createToken(code)
         ctx.body = new Result ({
+            code: '0',
             data:{
-                token:'23423234'
+                token:token
             }
         }) 
+    }
+    @Post('/getuserinfo')
+    @Log
+    async getUserInfo (ctx,next) {
+        const body = ctx.request.body 
+        console.log(body)
     }
 }

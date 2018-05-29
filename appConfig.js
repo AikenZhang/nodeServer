@@ -1,4 +1,4 @@
-export const config = {
+export const appConfig = {
  baseUrl: "https://api.weixin.qq.com",
  timeOut: 6000,
  appId: "wx4c739d536b9f1fd6",
