@@ -3,13 +3,17 @@ const { MiniPro } =require('../../common/MiniPro.js')
 
 export class UserService {
     //用户登陆
-    async login (code) {
-        const miniproService = new MiniPro()
-        let data = await miniproService.getOpenId(code)
+    async save (userInfo) {
+        let data = JSON.parse(userInfo.rawData)
         return new Promise((resolve,rej) => {
-            if (data) {
-                resolve(data)
-            } 
+            let user = new UserModel({
+                nickNam: data.nickName,
+                address: [
+                    data.country + " " + data.city
+                ],
+                imgUrl: data.avatarUrl
+            })
+       
         })
     }
    

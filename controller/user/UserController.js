@@ -12,15 +12,17 @@ export class UserController {
     async login (ctx,next) {
         let code = ctx.request.body.code 
         let userInfo = ctx.request.body.userInfo
+        console.log(userInfo)
         //获取openId
+        let openId = await getOpenId(code)
         //保存详细信息
-        let data = await userService.login(code)
+        let data = await userService.save(code)
         console.log(user)
         let token =await createToken(code)
         ctx.body = new Result ({
             code: '0',
             data:{
-                token:token
+                token:'token'
             }
         }) 
     }

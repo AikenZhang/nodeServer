@@ -3,7 +3,7 @@ export class Result {
         code,
         data
     }) {
-        this.code = code || 200
+        this.code = code || '0'
         this.data = data
     } 
 }
