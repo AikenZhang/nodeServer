@@ -1,9 +1,11 @@
 export class Result {
     constructor ({
-        code,
-        data
+        code = '0',
+        data = [],
+        errMSg = ''
     }) {
-        this.code = code || '0'
+        this.code = code 
         this.data = data
+        this.errMSg = errMSg
     } 
 }

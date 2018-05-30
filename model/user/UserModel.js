@@ -38,5 +38,12 @@ const UserSchema = new Schema({
         }
     }
 })
-
-export const UserModel = mongoose.model('users',UserSchema)
+UserSchema.pre('save', function (next) {
+    if (this.isNew) {
+        this.meta.createdAt = this.meta.updatedAt = Date.now()
+    } else {
+        this.meta.updatedAt = Date.now()
+    }
+    next() 
+})
+mongoose.model('users',UserSchema)

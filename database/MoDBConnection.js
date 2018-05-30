@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const glob = require('glob')
+const { resolve } = require('path')
 const db = 'mongodb://localhost:27017/fashion'
 mongoose.Promise = global.Promise 
 
@@ -27,4 +29,7 @@ export const connect = () => {
         })
     })
     
+}
+export const initSchemas = () => {
+    glob.sync(resolve(__dirname,'../model/**/*.js')).forEach(require)
 }

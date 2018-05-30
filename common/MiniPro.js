@@ -22,7 +22,7 @@ export const createToken = (openId) => {
     //过期时间
     const exp = () => {
         let nowDate = new Date().getTime()
-        let expTime = 2 * 24 * 60 * 1000
+        let expTime = 7 * 24 * 60 * 60 * 1000
         return nowDate + expTime
     }
     let payLoad = {
