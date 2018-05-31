@@ -11,7 +11,6 @@ const comparToken = (token) => {
     return cryptod.crypto(rawData, appConfig.serviceSecret) == signa
 }
 
-
 export const Interception = () => async (cxt, next) => {
     if (cxt.request.url !== '/user/login') {
         //登录拦截 查看是否带有token
@@ -27,6 +26,7 @@ export const Interception = () => async (cxt, next) => {
                 errMSg: '登录过期'
             })
         } else {
+            cxt.request.token = token
             await next()
         }
     }else {

@@ -31,5 +31,5 @@ export const connect = () => {
     
 }
 export const initSchemas = () => {
-    glob.sync(resolve(__dirname,'../model/**/*.js')).forEach(require)
+    glob.sync(resolve(__dirname,'../model/*.js')).forEach(require)
 }
