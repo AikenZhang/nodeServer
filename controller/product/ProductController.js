@@ -6,12 +6,20 @@ let productService = new ProductService()
 @Controller('/product')
 export class ProductController {
     @Post('/getprolist')
-    async getProductList (cxt,next) {
-       let type = cxt.request.body.type || '0'
-       let openId = cxt.request.token.openId
+    async getProductList (ctx,next) {
+       let type = ctx.request.body.type || '0'
+       let openId = ctx.request.token.openId
        let proList = await productService.getProdList(openId,type)
-       cxt.body = new Result({
-           data:proList
+       ctx.response.body = new Result({
+           data:'sdfs',
+           code: '111'
        })
+       ctx.response.status = 200
+    }
+
+    @Post('/uploadfile')
+    async upLoadFile (ctx,next) {
+        let params = ctx.request.body
+
     }
 }
