@@ -45,6 +45,9 @@ export default {
   },
   methods: {
     submit () {
+      this.$notice({
+        message:'sdfsdfsdfsd'
+      })
       console.log(this.$refs.form.validate())
       console.log(this.$refs.form.validate)
       request({

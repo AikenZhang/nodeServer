@@ -4,9 +4,11 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import MuseUI from 'muse-ui'
-import 'muse-ui/dist/muse-ui.css';
+import 'muse-ui/dist/muse-ui.css'
+import notice from '@/components/notice'
 Vue.config.productionTip = false
 Vue.use(MuseUI)
+Vue.use(notice)
 
 /* eslint-disable no-new */
 new Vue({

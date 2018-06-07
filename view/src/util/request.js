@@ -18,6 +18,12 @@ const request = (option) => {
             'Content-Type': 'application/json',
             'Author-Token': localStorage.getItem('token')
         }
-    },option))
+    },option)).then((data) => {
+        if (data && data.code != '0') {
+            if (data.code == '111') {
+                
+            }
+        }
+    })
 }
   export default request
