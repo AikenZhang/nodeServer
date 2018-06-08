@@ -12,10 +12,8 @@
           <mu-form-item label="密码" prop="password" :rules="passwordRules">
             <mu-text-field type="password" v-model="validateForm.password" prop="password"></mu-text-field>
           </mu-form-item>
-          <mu-form-item>
-            <mu-button color="primary" @click="submit">提交</mu-button>
-            <mu-button @click="clear">重置</mu-button>
-          </mu-form-item>
+          <mu-button color="primary" @click="submit">提交</mu-button>
+          <mu-button @click="clear">重置</mu-button>
         </mu-form>
       </div>
     </div>

@@ -47,7 +47,9 @@ export class UserController {
     @Post('/add')
     async add (ctx,next) {
         ctx.body = new Result({
-            code: '111'
+            code: '0',
+            data:'你啊吼',
+            errMSg:'登录过期了呀'
         })
     }
 }

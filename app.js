@@ -20,16 +20,16 @@ const useMiddleWares = (app) => {
 //启动监听
 (async () =>{
     //链接数据库
-    await connect()
+    //await connect()
     //初始化schema
     initSchemas()
     const app = new Koa()
     //添加cores 设置
     app.use(cors())
-    //田间body 解析
+    //添加body 解析
     app.use(bodyParser())
     //挂载请求拦截
-    app.use(Interception())
+    //app.use(Interception())
     // 挂载修饰符解析器
     await useMiddleWares(app)
     app.listen(3345)

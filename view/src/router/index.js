@@ -9,6 +9,10 @@ export default new Router({
       path: '/',
       name: 'login',
       component: _import('login/login.vue')
+    },{
+      path: '/upload',
+      name: 'upload',
+      component: _import('upload/upload.vue')
     }
   ]
 })
