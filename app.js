@@ -5,7 +5,7 @@ const { connect,initSchemas } = require('./database/MoDBConnection.js')
 const bodyParser = require('koa-bodyparser')
 const { Interception } = require('./common/Interception.js')
 const MIDDLEWARE = ['router']
-
+const { cors } = require('./middleware/cors.js')
 const useMiddleWares = (app) => {
     R.map(
         R.compose(
@@ -24,6 +24,9 @@ const useMiddleWares = (app) => {
     //初始化schema
     initSchemas()
     const app = new Koa()
+    //添加cores 设置
+    app.use(cors())
+    //田间body 解析
     app.use(bodyParser())
     //挂载请求拦截
     app.use(Interception())

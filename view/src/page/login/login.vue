@@ -45,13 +45,14 @@ export default {
   },
   methods: {
     submit () {
-      this.$notice({
-        message:'sdfsdfsdfsd'
-      })
       console.log(this.$refs.form.validate())
       console.log(this.$refs.form.validate)
       request({
-        url:'www/sfsd'
+        url: 'user/add',
+        method: 'post',
+        data: {
+          name: '111'
+        }
       })
     },
     clear () {
@@ -79,7 +80,7 @@ export default {
 .login-form {
     width:80%;
     height:60%;
-    margin: 60% auto 0 auto;
+    margin: 80% auto 0 auto;
     transform:translateY(-50%);
 }
 .fy-logo {

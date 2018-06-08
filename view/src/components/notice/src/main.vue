@@ -1,37 +1,42 @@
 <template>
-    <snackbar :color="color" :open.sync="open">
-    <icon left :value="icon"></icon>
-       {{message}}
-   </snackbar>
+   <mu-snackbar :color="type" :open.sync="open" :position="position">
+    <mu-icon left :value="icon"></mu-icon>
+    {{message}}
+  </mu-snackbar>
 </template>
 <script>
-import "muse-ui/lib/styles/base.less";
-import { Snackbar, Icon } from "muse-ui";
-import "muse-ui/lib/styles/theme.less";
 export default {
   data() {
     return {
-        _open: false,
-        timeout: 3000,
-        message: '消息通知',
-        icon: 'success'
-    };
+      colors: ['success', 'info', 'error', 'warning'],
+      position:'top',
+      type: 'success',
+      message: '消息提示',
+      open: false,
+      timeout: 3000
+    }
   },
-  components: {
-    Snackbar,
-    Icon
+  computed: {
+    icon () {
+      return {
+        success: 'check_circle',
+        info: 'info',
+        warning: 'priority_high',
+        error: 'warning'
+      }[this.type]
+    }
   },
   methods: {
-    _show() {
+    _show () {
       if (this._timer) clearTimeout(this._timer);
-      this._open = true;
+      this.open = true;
       this._timer = setTimeout(() => {
-        this._open = false;
+        this.open = false;
         this._hide()
       }, this.timeout);
     },
-    _hide () {
-        this.$destroy(true)
+    _hide() {
+      this.$destroy(true)
     }
   }
 };

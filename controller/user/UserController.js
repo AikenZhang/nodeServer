@@ -44,4 +44,10 @@ export class UserController {
         }
         
     }
+    @Post('/add')
+    async add (ctx,next) {
+        ctx.body = new Result({
+            code: '111'
+        })
+    }
 }

@@ -6,7 +6,6 @@
     "plugins": [
         "transform-runtime",
         "transform-decorators-legacy",
-        "transform-class-properties",
-        "babel-plugin-import"
+        "transform-class-properties"
     ]
 }
