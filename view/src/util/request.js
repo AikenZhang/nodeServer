@@ -1,15 +1,6 @@
 import axios from 'axios'
 import appConfig from "@/appConfig.js"
 import { notice } from '@/components/notice'
-// create an axios instance
-const ax = axios.create({
-    baseURL: appConfig.baseURL,
-    timeout: appConfig.timeout,
-    headers:{
-        'Content-Type': 'application/json',
-        'Author-Token': localStorage.getItem('token')
-    }
-  })
 const request = (option) => {
     return axios.request(Object.assign({
         method: 'post',
@@ -26,10 +17,10 @@ const request = (option) => {
                 setTimeout(() => {
                     location.href = '/'
                 }, 2000)
-                throw new Error('登录过期')
-            }else {
-                return resu;
+                throw new Error(resu.errMSg)
             }
+        }else{
+           return resu
         }
     }).catch((e) => {
         notice({

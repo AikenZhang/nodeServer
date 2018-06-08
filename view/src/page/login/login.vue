@@ -5,7 +5,7 @@
         <img :src="logo" />
       </div>
       <div class="fy-login">
-        <mu-form ref="form" :model="validateForm" class="mu-demo-form">
+        <mu-form ref="form" :model="validateForm" :autoValidate='false' class="mu-demo-form">
           <mu-form-item label="用户名"  prop="username" :rules="usernameRules">
             <mu-text-field v-model="validateForm.username" prop="username"></mu-text-field>
           </mu-form-item>
@@ -53,6 +53,11 @@ export default {
         data: {
           name: '111'
         }
+      }).then((result) => {
+        if (result && result.code == '0'){
+           console.log(result)
+        }
+       
       })
     },
     clear () {
