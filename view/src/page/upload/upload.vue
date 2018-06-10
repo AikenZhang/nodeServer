@@ -8,11 +8,26 @@
         <mu-option v-for="item in type" :key="item.typeId" :label="item.typeName" :value="item.typeId"></mu-option>
      </mu-select>
     </mu-form-item>
-
+    <mu-form-item label="产品尺寸">
+     <mu-select  multiple chips v-model="select" full-width>
+        <mu-option v-for="item in type" :key="item.typeId" :label="item.typeName" :value="item.typeId"></mu-option>
+     </mu-select>
+    </mu-form-item>
+    <mu-form-item label="产品数量">
+     <mu-text-field placeholder="请输入产品库存"></mu-text-field>
+    </mu-form-item>
+    <mu-form-item label='商品详细说明'>
+      <mu-text-field placeholder="不允许超过60个字符" multi-line :rows="3" :max-length="60"></mu-text-field>
+    </mu-form-item>
+    <upload v-model="imgs"></upload>
   </mu-form>
 </template>
 <script>
+import upload from '@/components/upload'
   export default {
+    components: {
+      upload
+    },
     data() {
       return {
         src: '@/assets/001.jpg',
@@ -37,11 +52,15 @@
                 typeName: '衣服'
             }
         ],
-        select:[]
+        select:[],
+        imgs:[]
       }
     },
     mounted() {
-
+      
+    },
+    updated () {
+      console.log(this.imgs[0].src)
     }
   }
 

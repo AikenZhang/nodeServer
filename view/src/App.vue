@@ -12,6 +12,8 @@ export default {
 
 <style>
 @import './assets/css/reset.css';
+@import './assets/font/css/font-awesome.min.css';
+@import 'cropperjs/dist/cropper.min.css';
 html,body {
   height: 100%;
 }
