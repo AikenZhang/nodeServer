@@ -1,86 +1,116 @@
 <template>
-  <mu-form>
-    <mu-form-item label="产品标题">
-      <mu-text-field></mu-text-field>
-    </mu-form-item>
-     <mu-form-item label="产品类别">
-     <mu-select  multiple chips v-model="select" full-width>
-        <mu-option v-for="item in type" :key="item.typeId" :label="item.typeName" :value="item.typeId"></mu-option>
-     </mu-select>
-    </mu-form-item>
-    <mu-form-item label="产品尺寸">
-     <mu-select  multiple chips v-model="select" full-width>
-        <mu-option v-for="item in type" :key="item.typeId" :label="item.typeName" :value="item.typeId"></mu-option>
-     </mu-select>
-    </mu-form-item>
-    <mu-form-item label="产品数量">
-     <mu-text-field placeholder="请输入产品库存"></mu-text-field>
-    </mu-form-item>
-    <mu-form-item label='商品详细说明'>
-      <mu-text-field placeholder="不允许超过60个字符" multi-line :rows="3" :max-length="60"></mu-text-field>
-    </mu-form-item>
-    <upload v-model="imgs"></upload>
-  </mu-form>
+   <better-scroll class="fy-scroll">
+          <mu-form ref="form" :model="validateForm">
+        <mu-form-item prop="title" label="产品标题" >
+          <mu-text-field v-model="validateForm.title" prop="title"></mu-text-field>
+        </mu-form-item>
+        <mu-form-item label="产品价格" prop='price'>
+        <mu-text-field placeholder="请输入产品价格" prefix="$" v-model.number='validateForm.price'></mu-text-field>
+        </mu-form-item>
+        <mu-form-item label="产品类别" prop='type' >
+        <mu-select  multiple chips v-model="validateForm.type" full-width>
+            <mu-option v-for="item in type" :key="item.typeId" :label="item.typeName" :value="item.typeId"></mu-option>
+        </mu-select>
+        </mu-form-item>
+        <mu-form-item label="产品尺寸" prop='size'>
+        <mu-select  multiple chips v-model="validateForm.size" full-width>
+            <mu-option v-for="item in type" :key="item.typeId" :label="item.typeName" :value="item.typeId"></mu-option>
+        </mu-select>
+        </mu-form-item>
+        <mu-form-item label="产品数量" prop='count'>
+        <mu-text-field placeholder="请输入产品库存" v-model.number='validateForm.count'></mu-text-field>
+        </mu-form-item>
+        <mu-form-item prop='Introduction' label='商品详细说明'>
+          <mu-text-field placeholder="不允许超过60个字符" v-model='validateForm.Introduction' multi-line :rows="3" :max-length="60"></mu-text-field>
+        </mu-form-item>
+        <mu-form-item label='选择图片' prop='imgs'>
+          <upload v-model="validateForm.imgs"></upload>
+        </mu-form-item>
+      </mu-form>
+   </better-scroll>
 </template>
 <script>
-import upload from '@/components/upload'
-  export default {
-    components: {
-      upload
-    },
-    data() {
-      return {
-        src: '@/assets/001.jpg',
-        type:[
-            {
-                typeId:'001',
-                typeName: '衣服'
-            },{
-                typeId:'002',
-                typeName: '衣服'
-            },{
-                typeId:'003',
-                typeName: '衣服'
-            },{
-                typeId:'004',
-                typeName: '衣服'
-            },{
-                typeId:'005',
-                typeName: '衣服'
-            },{
-                typeId:'006',
-                typeName: '衣服'
-            }
-        ],
-        select:[],
-        imgs:[]
+import upload from "@/components/upload";
+import { BetterScroll } from "@/components/scroll";
+export default {
+  components: {
+    upload,
+    BetterScroll
+  },
+  data() {
+    return {
+      src: "@/assets/001.jpg",
+      type: [
+        {
+          typeId: "001",
+          typeName: "衣服"
+        },
+        {
+          typeId: "002",
+          typeName: "衣服"
+        },
+        {
+          typeId: "003",
+          typeName: "衣服"
+        },
+        {
+          typeId: "004",
+          typeName: "衣服"
+        },
+        {
+          typeId: "005",
+          typeName: "衣服"
+        },
+        {
+          typeId: "006",
+          typeName: "衣服"
+        }
+      ],
+      select: [],
+      imgs: [],
+      validateForm: {
+        title: "",
+        price: 0,
+        type: [],
+        size: [],
+        count: 0,
+        Introduction: "",
+        imgs: []
       }
+    }
+  },
+  methods: {
+    submit () {
+
     },
-    mounted() {
+    clear () {
       
-    },
-    updated () {
-      console.log(this.imgs[0].src)
     }
   }
-
+};
 </script>
 <style>
-  .fy-col {
-    height: 1rem;
-  }
-.mu-form {
-  width:90%;
-  margin:15px auto;
+.fy-scroll {
+  width:100%;
+  height: 100%;
 }
-.mu-form-item-label,.mu-form-item-help{
-  font-size:14px; 
-  color:#333;
+.fy-col {
+  height: 1rem;
+}
+.mu-form {
+  width: 90%;
+  margin: 15px auto;
+}
+.mu-form-item-label,
+.mu-form-item-help {
+  font-size: 14px;
+  color: #333;
 }
 .mu-form-item__error .mu-form-item-help {
-  color:#F9E79F;
+  color: #f9e79f;
 }
-.mu-form-item,.mu-form-item-content{
-  margin-bottom:10px;
+.mu-form-item,
+.mu-form-item-content {
+  margin-bottom: 10px;
 }
 </style>

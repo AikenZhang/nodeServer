@@ -10,6 +10,7 @@ import notice from '@/components/notice'
 import loading from '@/components/loading'
 import cropper from '@/components/cropper'
 import imgpreview from '@/components/imgpreview'
+
 Vue.use(MuseUI);
 Vue.use(notice)
 Vue.use(loading)

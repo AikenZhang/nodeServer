@@ -28,7 +28,7 @@ export default {
 </script>
 <style scoped>
 .fy-loading {
-  position: absolute;
+  position: fixed;
   z-index: 999;
   top: 0;
   left: 0;

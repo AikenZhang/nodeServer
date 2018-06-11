@@ -17,11 +17,13 @@
         methods: {
             deleteImg () {
                 let me = this
+                console.log(me.imgId)
                 if (me.delete) {
                     me.delete(me.imgId)
                 }
             },
             close () {
+                console.log(this.imgId)
                 this.show = false
                 this.$destroy(true);
                 this.$el.parentNode.removeChild(this.$el)
@@ -31,7 +33,7 @@
 </script>
 <style>
 .fy-imgpreview {
-    position:absolute;
+    position:fixed;
     top:0;
     left: 0;
     right: 0;

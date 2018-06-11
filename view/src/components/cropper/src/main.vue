@@ -91,7 +91,7 @@ export default {
 </script>
 <style scoped>
 .fy-crop {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;

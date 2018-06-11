@@ -13,12 +13,17 @@ import _ from "lodash";
 export default {
   name: "uploadItem",
   model: {
-    prop: 'imgs',
+    prop: 'propImgs',
     event: "change"
   },
   props: {
-    imgs: {
+    propImgs: {
       type: Array
+    }
+  },
+  data () {
+    return {
+      imgs:[]
     }
   },
   mounted() {
@@ -40,7 +45,7 @@ export default {
               imgQuality: 0.1,
               create(data) {
                 me.addImg({
-                  id: Date.now(),
+                  id: Date.now().toString(),
                   src: data
                 })
               }
@@ -89,9 +94,10 @@ export default {
     },
     //删除img
     removeImg(id) {
-      _.remove(this.imgs, n => {
-        return (n.id = id);
+     let index = _.findIndex(this.imgs, n => {
+        return (n.id == id);
       })
+      this.imgs.splice(index,1)
       this.$emit('change',this.imgs)
     }
   }
@@ -131,12 +137,9 @@ export default {
   height: 2px;
 }
 .fy-upload-input {
-  position: absolute;
   z-index: 1;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  width:100%;
+  height:100%;
   opacity: 0;
 }
 .fy-upload-imgContent {
