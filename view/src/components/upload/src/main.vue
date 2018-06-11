@@ -13,17 +13,21 @@ import _ from "lodash";
 export default {
   name: "uploadItem",
   model: {
-    prop: 'propImgs',
+    prop: "propImgs",
     event: "change"
   },
   props: {
     propImgs: {
       type: Array
+    },
+    choseImgCount:{
+      type:Number,
+      default:1
     }
   },
-  data () {
+  data() {
     return {
-      imgs:[]
+      imgs: []
     }
   },
   mounted() {
@@ -35,24 +39,27 @@ export default {
           me.$notice({
             type: "error",
             message: "最多上传9张图片"
-          })
-          return
+          });
+          return;
         }
-        for (let i = 0; i < files.length; i++) {
+        let length = me.choseImgCount < files.length ? me.choseImgCount : files.length
+        console.log(length)
+        for (let i = 0; i < length; i++) {
           me._createDataUrl(files[i]).then(data => {
-            me.$cropper({
+            me.crop({
               src: data,
-              imgQuality: 0.1,
+              type:'blob',
               create(data) {
                 me.addImg({
                   id: Date.now().toString(),
-                  src: data
-                })
+                  src: URL.createObjectURL(data),
+                  blob:data
+                });
               }
             })
           })
         }
-        this.value = "";
+        this.value = ""
       })
     }
   },
@@ -70,7 +77,7 @@ export default {
           };
           fileReader.readAsDataURL(file);
         }
-      })
+      });
     },
     //显示大图
     showPreview({ target }) {
@@ -84,21 +91,25 @@ export default {
           delete(id) {
             me.removeImg(id);
           }
-        })
+        });
       }
     },
     //添加img
     addImg(img) {
       this.imgs.push(img);
-      this.$emit('change',this.imgs)
+      this.$emit("change", this.imgs);
     },
     //删除img
     removeImg(id) {
-     let index = _.findIndex(this.imgs, n => {
-        return (n.id == id);
-      })
-      this.imgs.splice(index,1)
-      this.$emit('change',this.imgs)
+      let index = _.findIndex(this.imgs, n => {
+        return n.id == id;
+      });
+      this.imgs.splice(index, 1);
+      this.$emit("change", this.imgs);
+    },
+    //裁剪
+    crop (option) {
+       return this.$cropper(option)
     }
   }
 };
@@ -138,8 +149,8 @@ export default {
 }
 .fy-upload-input {
   z-index: 1;
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
   opacity: 0;
 }
 .fy-upload-imgContent {

@@ -1,6 +1,6 @@
 <template>
    <better-scroll class="fy-scroll">
-          <mu-form ref="form" :model="validateForm">
+        <mu-form ref="form" :model="validateForm">
         <mu-form-item prop="title" label="产品标题" >
           <mu-text-field v-model="validateForm.title" prop="title"></mu-text-field>
         </mu-form-item>
@@ -23,15 +23,20 @@
         <mu-form-item prop='Introduction' label='商品详细说明'>
           <mu-text-field placeholder="不允许超过60个字符" v-model='validateForm.Introduction' multi-line :rows="3" :max-length="60"></mu-text-field>
         </mu-form-item>
-        <mu-form-item label='选择图片' prop='imgs'>
-          <upload v-model="validateForm.imgs"></upload>
+        <mu-form-item label='选择图片' prop='imgs' >
+          <upload v-model="validateForm.imgs" :choseImgCount = '1'></upload>
         </mu-form-item>
+        <div class="fy-upload-but">
+          <mu-button color="primary" @click="submit">提交</mu-button>
+          <mu-button @click="clear">重置</mu-button>
+        </div>
       </mu-form>
    </better-scroll>
 </template>
 <script>
 import upload from "@/components/upload";
 import { BetterScroll } from "@/components/scroll";
+import request from '@/util/request.js'
 export default {
   components: {
     upload,
@@ -39,7 +44,6 @@ export default {
   },
   data() {
     return {
-      src: "@/assets/001.jpg",
       type: [
         {
           typeId: "001",
@@ -66,8 +70,6 @@ export default {
           typeName: "衣服"
         }
       ],
-      select: [],
-      imgs: [],
       validateForm: {
         title: "",
         price: 0,
@@ -81,7 +83,19 @@ export default {
   },
   methods: {
     submit () {
-
+      let me = this
+      if (this.$refs.form.validate()){
+        
+      }
+      let formData = new FormData()
+      formData.append('files',me.validateForm.imgs[0].blob)
+      console.log(formData)
+      request({
+        url: 'admin/upload',
+        data: formData
+      }).then((data) => {
+        console.log(data)
+      })
     },
     clear () {
       
@@ -91,7 +105,7 @@ export default {
 </script>
 <style>
 .fy-scroll {
-  width:100%;
+  width: 100%;
   height: 100%;
 }
 .fy-col {
@@ -112,5 +126,11 @@ export default {
 .mu-form-item,
 .mu-form-item-content {
   margin-bottom: 10px;
+}
+.fy-upload-but {
+  height: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

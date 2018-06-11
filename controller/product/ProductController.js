@@ -1,4 +1,4 @@
-const { Controller,Get,Post, Log} = require('../BaseController.js')
+const { Controller,Post} = require('../BaseController.js')
 const { ProductService } = require('../../service/product/ProductService.js')
 const { Result } = require('../../common/Result.js')
 
