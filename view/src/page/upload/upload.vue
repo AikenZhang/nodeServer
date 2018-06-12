@@ -89,7 +89,8 @@ export default {
       }
       let formData = new FormData()
       formData.append('files',me.validateForm.imgs[0].blob)
-      console.log(formData)
+      formData.append('a',"sddfsdfs")
+      console.log(me.validateForm.imgs[0].blob)
       request({
         url: 'admin/upload',
         data: formData

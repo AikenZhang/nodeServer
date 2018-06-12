@@ -19,7 +19,7 @@ export default {
     return {
       type: "dataUrl", //  dataUrl || blob
       imgType: "image/png", // image/png || image/jpeg
-      imgQuality: 1, //生成图片的质量  当type为dataUrl的时候起作用 0 ~ 1
+      imgQuality: 0.3, //生成图片的质量  当type为dataUrl的时候起作用 0 ~ 1
       src: ""
     };
   },
@@ -35,7 +35,7 @@ export default {
           if (me.create) {
             me.create(data);
           }
-        });
+        },'image/jpeg',me.imgQuality);
       } else {
         let dataUrl = me.cropper
           .getCroppedCanvas()

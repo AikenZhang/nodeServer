@@ -22,7 +22,10 @@ export class QiNiu {
                   throw respErr;
                 }
                 if (respInfo.statusCode == 200) {
-                  resolve(respBody)
+                  resolve({
+                      src: appConfig.qiniuBaseUrl + fileName,
+                      respBody: respBody
+                  })
                 } else {
                   rej(respBody)
                 }
