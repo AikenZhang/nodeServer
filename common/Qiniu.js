@@ -23,9 +23,10 @@ export class QiNiu {
                 }
                 if (respInfo.statusCode == 200) {
                   resolve({
-                      src: appConfig.qiniuBaseUrl + fileName,
+                      src: fileName,
                       respBody: respBody
                   })
+                  console.log(fileName)
                 } else {
                   rej(respBody)
                 }

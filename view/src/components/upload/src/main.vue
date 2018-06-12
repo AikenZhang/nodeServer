@@ -13,11 +13,11 @@ import _ from "lodash";
 export default {
   name: "uploadItem",
   model: {
-    prop: "propImgs",
+    prop: "files",
     event: "change"
   },
   props: {
-    propImgs: {
+    files: {
       type: Array
     },
     choseImgCount:{
@@ -54,7 +54,7 @@ export default {
                   id: Date.now().toString(),
                   src: URL.createObjectURL(data),
                   blob:data
-                });
+                })
               }
             })
           })

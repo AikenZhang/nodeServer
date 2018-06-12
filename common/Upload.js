@@ -3,8 +3,8 @@ const path = require('path')
 const os = require('os')
 const fs = require('fs')
 const Busboy = require('busboy')
-
-
+const { QiNiu } = require('.//Qiniu.js')
+const qiniu = new QiNiu()
 /**
  * 同步创建文件目录
  * @param  {string} dirname 目录绝对地址
@@ -37,7 +37,7 @@ function getSuffixName( fileName ) {
  * @param  {object} options 文件上传参数 fileType文件类型， path文件存放路径
  * @return {promise}         
  */
-function uploadFile( ctx, options) {
+function uploadFile( ctx ) {
   let req = ctx.req
   let res = ctx.res
   let busboy = new Busboy({headers: req.headers})
@@ -48,19 +48,27 @@ function uploadFile( ctx, options) {
 //   let mkdirResult = mkdirsSync( filePath )
 
   return new Promise((resolve, reject) => {
-      let formData = {}
+    let formData = {
+        files:[]
+    }
     // 解析表单中其他字段信息
     busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
         console.log('表单字段数据 [' + fieldname + ']: value: ' + inspect(val));
         formData[fieldname] = inspect(val)
       });
     // 解析请求文件事件
-    busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
-      resolve(file)
+    busboy.on('file', async function(fieldname, file, filename, encoding, mimetype) {
+       //七牛上传文件
+       let result = await qiniu.upLoadFile(file)
+       file.on('end',() => {
+        formData.files.push(result.src)
+       })
+       console.log(result)
     })
     // 解析结束事件
     busboy.on('finish', function( ) {
-       req.formData = formData
+       resolve(formData)
+       console.log('成功')
     })
     // 解析错误事件
     busboy.on('error', function(err) {
@@ -71,4 +79,4 @@ function uploadFile( ctx, options) {
     req.pipe(busboy)
   })
 }
-export const upload = uploadFile
+export const uploader = uploadFile
