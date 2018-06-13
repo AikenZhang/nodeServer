@@ -23,4 +23,15 @@ export class ProductDao {
         })
         
     }
+    //添加商品信息
+    async saveProdInfo (info) {
+        return new Promise(() => {
+            ProductModel.insertMany({
+                id:Date.now().toString(),
+                ...info
+            },(err,doc) => {
+                if (!err) resolve(doc)
+            })
+        })
+    }
 }

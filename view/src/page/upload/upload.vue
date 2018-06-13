@@ -12,19 +12,27 @@
             <mu-option v-for="item in type" :key="item.typeId" :label="item.typeName" :value="item.typeId"></mu-option>
         </mu-select>
         </mu-form-item>
+        <mu-form-item label="标签" prop='type' >
+          <mu-select  multiple chips v-model="validateForm.tag" full-width>
+              <mu-option v-for="item in type" :key="item.typeId" :label="item.typeName" :value="item.typeId"></mu-option>
+          </mu-select>
+        </mu-form-item>
         <mu-form-item label="产品尺寸" prop='size'>
-        <mu-select  multiple chips v-model="validateForm.size" full-width>
-            <mu-option v-for="item in type" :key="item.typeId" :label="item.typeName" :value="item.typeId"></mu-option>
-        </mu-select>
+          <mu-select  multiple chips v-model="validateForm.size" full-width>
+              <mu-option v-for="item in type" :key="item.typeId" :label="item.typeName" :value="item.typeId"></mu-option>
+          </mu-select>
         </mu-form-item>
-        <mu-form-item label="产品数量" prop='count'>
-        <mu-text-field placeholder="请输入产品库存" v-model.number='validateForm.count'></mu-text-field>
+        <mu-form-item label="产品星级" prop='start'>
+          <mu-text-field placeholder="请输入产品星级" v-model.number='validateForm.start'></mu-text-field>
         </mu-form-item>
+          <mu-form-item label="产品数量" prop='count'>
+            <mu-text-field placeholder="请输入产品库存" v-model.number='validateForm.count'></mu-text-field>
+          </mu-form-item>
         <mu-form-item prop='Introduction' label='商品详细说明'>
           <mu-text-field placeholder="不允许超过60个字符" v-model='validateForm.Introduction' multi-line :rows="3" :max-length="60"></mu-text-field>
         </mu-form-item>
-        <mu-form-item label='选择图片' prop='imgs' >
-          <upload v-model="validateForm.imgs" :choseImgCount = '1'></upload>
+        <mu-form-item label='选择图片' prop='files' >
+          <upload v-model="validateForm.files" :choseImgCount = '1'></upload>
         </mu-form-item>
         <div class="fy-upload-but">
           <mu-button color="primary" @click="submit">提交</mu-button>
@@ -76,24 +84,29 @@ export default {
         type: [],
         size: [],
         count: 0,
-        Introduction: "",
-        imgs: []
+        introduction: "",
+        files: [],
+        start:0
       }
     }
   },
   methods: {
     submit () {
       let me = this
-      if (this.$refs.form.validate()){
+      // if (this.$refs.form.validate()){
         
-      }
+      // }
       let files = me.validateForm.imgs
       let formData = new FormData()
-      formData.append('a','sdfdsf')
+      for (let i in me.validateForm) {
+        if (i !== 'files'){
+          formData.append(i,me.validateForm[i])
+        }
+      }
       for (let i in files) {
         formData.append(files[i].id,files[i].blob)
       }
-      console.log(me.validateForm.imgs)
+       console.log(formData)
       request({
         url: 'admin/upload',
         data: formData

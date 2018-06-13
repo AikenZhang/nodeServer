@@ -42,40 +42,35 @@ function uploadFile( ctx ) {
   let res = ctx.res
   let busboy = new Busboy({headers: req.headers})
 
-//   // 获取类型
-//   let fileType = options.fileType || 'common'
-//   let filePath = path.join( options.path,  fileType)
-//   let mkdirResult = mkdirsSync( filePath )
-
   return new Promise((resolve, reject) => {
     let formData = {
         files:[]
     }
+    //缓存七牛上传结果状态
+    let qn = []
     // 解析表单中其他字段信息
     busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
         console.log('表单字段数据 [' + fieldname + ']: value: ' + inspect(val));
         formData[fieldname] = inspect(val)
+        console.log(inspect(val))
       });
     // 解析请求文件事件
-    busboy.on('file', async function(fieldname, file, filename, encoding, mimetype) {
+    busboy.on('file',function(fieldname, file, filename, encoding, mimetype) {
        //七牛上传文件
-       let result = await qiniu.upLoadFile(file)
-       file.on('end',() => {
-        formData.files.push(result.src)
-       })
-       console.log(result)
+       qn.push(qiniu.upLoadFile(file))
     })
     // 解析结束事件
     busboy.on('finish', function( ) {
-       resolve(formData)
-       console.log('成功')
+      Promise.all(qn).then((resultArr) => {
+        formData.files = resultArr
+        resolve(formData)
+      })
     })
     // 解析错误事件
     busboy.on('error', function(err) {
       console.log('文件上出错')
       reject(result)
     })
-
     req.pipe(busboy)
   })
 }
