@@ -44,6 +44,7 @@ function uploadFile( ctx ) {
 
   return new Promise((resolve, reject) => {
     let formData = {
+        fields:{},
         files:[]
     }
     //缓存七牛上传结果状态
@@ -51,8 +52,8 @@ function uploadFile( ctx ) {
     // 解析表单中其他字段信息
     busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
         console.log('表单字段数据 [' + fieldname + ']: value: ' + inspect(val));
-        formData[fieldname] = inspect(val)
-        console.log(inspect(val))
+        formData.fields = JSON.parse(val)
+       
       });
     // 解析请求文件事件
     busboy.on('file',function(fieldname, file, filename, encoding, mimetype) {
@@ -60,7 +61,8 @@ function uploadFile( ctx ) {
        qn.push(qiniu.upLoadFile(file))
     })
     // 解析结束事件
-    busboy.on('finish', function( ) {
+    busboy.on('finish', function() {
+      console.log(formData)
       Promise.all(qn).then((resultArr) => {
         formData.files = resultArr
         resolve(formData)

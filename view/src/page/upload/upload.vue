@@ -29,7 +29,7 @@
             <mu-text-field placeholder="请输入产品库存" v-model.number='validateForm.count'></mu-text-field>
           </mu-form-item>
         <mu-form-item prop='Introduction' label='商品详细说明'>
-          <mu-text-field placeholder="不允许超过60个字符" v-model='validateForm.Introduction' multi-line :rows="3" :max-length="60"></mu-text-field>
+          <mu-text-field placeholder="不允许超过60个字符" v-model='validateForm.introduction' multi-line :rows="3" :max-length="60"></mu-text-field>
         </mu-form-item>
         <mu-form-item label='选择图片' prop='files' >
           <upload v-model="validateForm.files" :choseImgCount = '1'></upload>
@@ -96,13 +96,15 @@ export default {
       // if (this.$refs.form.validate()){
         
       // }
-      let files = me.validateForm.imgs
+      let files = me.validateForm.files
       let formData = new FormData()
+      let temp = {}
       for (let i in me.validateForm) {
         if (i !== 'files'){
-          formData.append(i,me.validateForm[i])
+          temp[i] = me.validateForm[i]
         }
       }
+      formData.append("fields",JSON.stringify(temp))
       for (let i in files) {
         formData.append(files[i].id,files[i].blob)
       }

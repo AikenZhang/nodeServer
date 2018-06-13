@@ -20,7 +20,7 @@ const useMiddleWares = (app) => {
 //启动监听
 (async () =>{
     //链接数据库
-    //await connect()
+    await connect()
     //初始化schema
     initSchemas()
     const app = new Koa()

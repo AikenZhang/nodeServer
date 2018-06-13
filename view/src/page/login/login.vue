@@ -44,7 +44,6 @@ export default {
   methods: {
     submit () {
       console.log(this.$refs.form.validate())
-      console.log(this.$refs.form.validate)
       request({
         url: 'user/add',
         method: 'post',

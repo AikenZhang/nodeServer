@@ -1,4 +1,4 @@
 export default {
     timeOut:6000,
-    baseUrl:'http://192.168.137.1:3345/'
+    baseUrl:'http://192.168.1.101:3345/'
 }

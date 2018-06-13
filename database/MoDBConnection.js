@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 const glob = require('glob')
 const { resolve } = require('path')
-const db = 'mongodb://localhost:27017/fashion'
+const { appConfig } = require('../appConfig.js')
+const db = appConfig.mongo
 mongoose.Promise = global.Promise 
 
 export const connect = () => {

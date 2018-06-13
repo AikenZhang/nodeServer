@@ -10,11 +10,13 @@ export class UpLoad {
     @Post('/upload')
     async upLoad(ctx, next) {
         let formData = await uploader(ctx)
-        console.log(formData)
-        let result = upLoadService.saveUpLoadInfo({
-            ...formData
+        let result = await upLoadService.saveUpLoadInfo({
+            ...formData.fields,
+            files:formData.files,
+            userId:'zhang'
         })
-        if (formData) {
+        console.log(formData)
+        if (result) {
             ctx.body = new Result({
                 data: 'sdfs',
                 code: '0'

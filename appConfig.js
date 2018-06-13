@@ -8,5 +8,6 @@ export const appConfig = {
  qiniuSecretKey: "w5-0nE_0peohzw6RcG4zBA3SSQuocUGa6VQw2UGT",
  qiniuBucket: "fashion",
  qiniuZone: "qiniu.zone.Zone_z1",
- qiniuBaseUrl: "fashion.zhangguangh.cn/"
+ qiniuBaseUrl: "fashion.zhangguangh.cn/",
+ mongo:'mongodb://localhost:27017/fashion'
 }
