@@ -29,14 +29,15 @@ export default {
 <style scoped>
 .fy-loading {
   position: fixed;
-  z-index: 999;
+  z-index: 99;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
 }
 .fy-loading-mask {
-  position: absolute;
+  position: fixed;
+  z-index: 999;
   top: 0;
   bottom: 0;
   left: 0;

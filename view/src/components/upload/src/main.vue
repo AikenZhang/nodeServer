@@ -1,7 +1,7 @@
 <template>
     <div class="fy-uploadItem">
         <div class="fy-upload-imgContent" @click="showPreview">
-            <img v-for="item in imgs" :key='item.id' :src='item.src' :data-action='item.id' />
+            <img v-for="item in files" :key='item.id' :src='item.src' :data-action='item.id' />
             <div class="fy-uploadItem-box">
                  <input ref='file' class="fy-upload-input" type="file" accept="image/*" multiple="" />
             </div>
@@ -18,7 +18,8 @@ export default {
   },
   props: {
     files: {
-      type: Array
+      type: Array,
+      default:[]
     },
     choseImgCount:{
       type:Number,
@@ -96,16 +97,16 @@ export default {
     },
     //添加img
     addImg(img) {
-      this.imgs.push(img);
-      this.$emit("change", this.imgs);
+      this.files.push(img);
+      this.$emit("change", this.files);
     },
     //删除img
     removeImg(id) {
-      let index = _.findIndex(this.imgs, n => {
+      let index = _.findIndex(this.files, n => {
         return n.id == id;
       });
-      this.imgs.splice(index, 1);
-      this.$emit("change", this.imgs);
+      this.files.splice(index, 1);
+      this.$emit("change", this.files);
     },
     //裁剪
     crop (option) {

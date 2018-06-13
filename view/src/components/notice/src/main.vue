@@ -19,10 +19,10 @@ export default {
   computed: {
     icon () {
       return {
-        success: 'check_circle',
-        info: 'info',
-        warning: 'priority_high',
-        error: 'warning'
+        success: ':fa fa-check-circle',
+        info: ':fa fa-info-circle',
+        warning: ':fa fa-exclamation',
+        error: ':fa fa-warning'
       }[this.type]
     }
   },

@@ -1,37 +1,36 @@
 <template>
-   <better-scroll class="fy-scroll">
         <mu-form ref="form" :model="validateForm">
-        <mu-form-item prop="title" label="产品标题" >
+        <mu-form-item prop="title" label="产品标题" :rules='rules.textFieldRules' >
           <mu-text-field v-model="validateForm.title" prop="title"></mu-text-field>
         </mu-form-item>
-        <mu-form-item label="产品价格" prop='price'>
-        <mu-text-field placeholder="请输入产品价格" prefix="$" v-model.number='validateForm.price'></mu-text-field>
+        <mu-form-item label="产品价格" prop='price' :rules='rules.textFieldRules'>
+        <mu-text-field placeholder="请输入产品价格" prefix="¥" v-model.number='validateForm.price'></mu-text-field>
         </mu-form-item>
-        <mu-form-item label="产品类别" prop='type' >
+        <mu-form-item label="产品类别" prop='type' :rules='rules.selectRules'>
         <mu-select  multiple chips v-model="validateForm.type" full-width>
             <mu-option v-for="item in type" :key="item.typeId" :label="item.typeName" :value="item.typeId"></mu-option>
         </mu-select>
         </mu-form-item>
-        <mu-form-item label="标签" prop='type' >
+        <mu-form-item label="标签" prop='tag' :rules='rules.selectRules'>
           <mu-select  multiple chips v-model="validateForm.tag" full-width>
               <mu-option v-for="item in type" :key="item.typeId" :label="item.typeName" :value="item.typeId"></mu-option>
           </mu-select>
         </mu-form-item>
-        <mu-form-item label="产品尺寸" prop='size'>
+        <mu-form-item label="产品尺寸" prop='size' :rules='rules.selectRules'>
           <mu-select  multiple chips v-model="validateForm.size" full-width>
               <mu-option v-for="item in type" :key="item.typeId" :label="item.typeName" :value="item.typeId"></mu-option>
           </mu-select>
         </mu-form-item>
-        <mu-form-item label="产品星级" prop='start'>
+        <mu-form-item label="产品星级" prop='start' :rules='rules.startRules'>
           <mu-text-field placeholder="请输入产品星级" v-model.number='validateForm.start'></mu-text-field>
         </mu-form-item>
-          <mu-form-item label="产品数量" prop='count'>
+          <mu-form-item label="产品数量" prop='count' :rules='rules.countRules'>
             <mu-text-field placeholder="请输入产品库存" v-model.number='validateForm.count'></mu-text-field>
           </mu-form-item>
-        <mu-form-item prop='Introduction' label='商品详细说明'>
+        <mu-form-item prop='introduction' label='商品详细说明' :rules='rules.textFieldRules'>
           <mu-text-field placeholder="不允许超过60个字符" v-model='validateForm.introduction' multi-line :rows="3" :max-length="60"></mu-text-field>
         </mu-form-item>
-        <mu-form-item label='选择图片' prop='files' >
+        <mu-form-item label='选择图片' prop='files' :rules='rules.selectRules'>
           <upload v-model="validateForm.files" :choseImgCount = '1'></upload>
         </mu-form-item>
         <div class="fy-upload-but">
@@ -39,7 +38,6 @@
           <mu-button @click="clear">重置</mu-button>
         </div>
       </mu-form>
-   </better-scroll>
 </template>
 <script>
 import upload from "@/components/upload";
@@ -52,6 +50,20 @@ export default {
   },
   data() {
     return {
+      rules:{
+        textFieldRules:[
+          { validate: (val) => !!val,message:'必须填写!' }
+        ],
+        selectRules:[
+          { validate: (val) => val.length != 0, message: '至少选择一个!' }
+        ],
+        countRules:[
+          {validate:(val) => val > 0, message: '数值必须大于0!'}
+        ],
+        startRules:[
+          { validate:(val) => val < 6 && val > 0,message: '数值必须大于0,小于6'}
+        ]
+      },
       type: [
         {
           typeId: "001",
@@ -86,16 +98,18 @@ export default {
         count: 0,
         introduction: "",
         files: [],
-        start:0
+        start:0,
+        tag:[]
       }
     }
   },
   methods: {
     submit () {
       let me = this
-      // if (this.$refs.form.validate()){
-        
-      // }
+      console.log(me.validateForm.files.length)
+      if (!this.$refs.form.validate()){
+        return
+      }
       let files = me.validateForm.files
       let formData = new FormData()
       let temp = {}
@@ -108,16 +122,34 @@ export default {
       for (let i in files) {
         formData.append(files[i].id,files[i].blob)
       }
-       console.log(formData)
+       me.$showLoading({
+        message: "正在上传..."
+      })
       request({
         url: 'admin/upload',
         data: formData
       }).then((data) => {
-        console.log(data)
+        if (data.code == '0') {
+           me.$hideLoading()
+           this.$notice({
+             type:'success',
+             message: '上传成功'
+           })
+        }
       })
     },
     clear () {
-      
+      this.validateForm = {
+        title: "",
+        price: 0,
+        type: [],
+        size: [],
+        count: 0,
+        introduction: "",
+        files: [],
+        start:0,
+        tag:[]
+      }
     }
   }
 };
@@ -138,9 +170,6 @@ export default {
 .mu-form-item-help {
   font-size: 14px;
   color: #333;
-}
-.mu-form-item__error .mu-form-item-help {
-  color: #f9e79f;
 }
 .mu-form-item,
 .mu-form-item-content {
