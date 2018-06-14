@@ -2,7 +2,9 @@
   <div class="fy-user">
     <div class="fy-header">
       <div class='fy-user-left'>
-        <img :src="user.img" class='fy-user-img'/>
+          <mu-avatar :size="60">
+            <img src="">
+          </mu-avatar>
       </div>
       <div class='fy-user-right'>
         <div class='fy-user-name'>{{user.name}}</div>
