@@ -10,10 +10,6 @@ export default new Router({
       name: 'login',
       component: _import('page/login/login.vue')
     },{
-      path: '/upload',
-      name: 'upload',
-      component: _import('page/upload/upload.vue')
-    },{
       path: '/uploadItem',
       name: 'uploadItem',
       component: _import('components/upload')
@@ -29,6 +25,21 @@ export default new Router({
       path:"/img",
       name:'img',
       component: _import('components/imgpreview/src/main.vue')
+    },{
+       path: '/index',
+       name: 'index',
+       component: _import('page/index/index.vue'),
+       children:[
+        {
+          path: '/upload',
+          name: 'upload',
+          component: _import('page/upload/upload.vue')
+        },{
+          path: '/user',
+          name: 'user',
+          component: _import('page/user/user.vue')
+        }
+       ]
     }
   ]
 })

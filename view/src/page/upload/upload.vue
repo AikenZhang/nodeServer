@@ -176,7 +176,7 @@ export default {
   margin-bottom: 10px;
 }
 .fy-upload-but {
-  height: 2rem;
+  height: 3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;

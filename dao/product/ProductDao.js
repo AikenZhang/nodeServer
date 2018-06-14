@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 let ProductModel = mongoose.model('products')
+let Type = new mongoose.model('type')
+let Size = new mongoose.model('size')
 export class ProductDao {
     //获取商品列表
     async getProdList (openId,type) {
@@ -31,6 +33,24 @@ export class ProductDao {
                 ...info
             },(err,doc) => {
                 if (!err) resolve(doc)
+                else rej(err)
+            })
+        })
+    }
+    //获取产品类型
+    async getType () {
+        return new Promise((resolve,rej) => {
+            Type.find({}).exec((err,doc) => {
+                if(!err) resolve(doc)
+                else rej(err)
+            })
+        })
+    }
+    //获取产品尺寸
+    async getSize() {
+        return new Promise((resolve,rej) => {
+            Size.find({}).exec((err,doc) => {
+                if(!err) resolve(doc)
                 else rej(err)
             })
         })

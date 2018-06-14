@@ -1,13 +1,13 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const SizeSchema = new Schema({
-    //尺寸id
+const TypeSchema = new Schema({
+    //类型编号
     id:{
         type:String,
         required:true
     },
-    //尺寸名称
+    //类型名称
     name:{
         type:String,
         required:true
@@ -23,7 +23,7 @@ const SizeSchema = new Schema({
         }
     }
 })
-SizeSchema.pre('save', function (next) {
+TypeSchema.pre('save', function (next) {
     if (this.isNew) {
         this.meta.createdAt = this.meta.updatedAt = Date.now()
     } else {
@@ -31,4 +31,4 @@ SizeSchema.pre('save', function (next) {
     }
     next() 
 })
-mongoose.model('size',SizeSchema)
+mongoose.model('type',TypeSchema)

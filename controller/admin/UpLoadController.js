@@ -15,7 +15,6 @@ export class UpLoad {
             files:formData.files,
             userId:'zhang'
         })
-        console.log(formData)
         if (result) {
             ctx.body = new Result({
                 data: 'sdfs',
@@ -27,5 +26,13 @@ export class UpLoad {
                 code: '-1'
             })
         }
+    }
+    @Post('/getprodinfo')
+    async getProdInfo () {
+        let data = await upLoadService.getProdInfo()
+        ctx.body =new Result({
+            code: '0',
+            data: data
+        })
     }
 }
