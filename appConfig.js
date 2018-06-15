@@ -9,5 +9,5 @@ export const appConfig = {
  qiniuBucket: "fashion",
  qiniuZone: "qiniu.zone.Zone_z1",
  qiniuBaseUrl: "fashion.zhangguangh.cn/",
- mongo:'mongodb://localhost:27017/fashion'
+ mongo:'mongodb://fashion:335147@58.87.72.54:27017/fashion'
 }

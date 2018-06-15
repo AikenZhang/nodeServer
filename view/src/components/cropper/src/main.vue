@@ -2,12 +2,12 @@
     <div class="fy-crop">
         <img ref='img' style="width:100%;" :src="src"/>
          <div class="fy-crop-tbar" @click="click" >
-            <i data-action='ok' class="fa fa-check fy-crop-tbar-but"></i>
-            <i data-action='rotate-left' class="fa fa-rotate-left"></i>
-            <i data-action='rotate-right' class="fa fa-rotate-right"></i>
-            <i data-action='flip-horizontal' class="fa fa-arrows-h"></i>
-            <i data-action='flip-vertical' class="fa fa-arrows-v"></i>
-            <i data-action='close' class="fa fa-close fy-crop-tbar-but"></i>
+            <i data-action='ok' class="iconfont icon-check fy-crop-tbar-but"></i>
+            <i data-action='rotate-left' class="iconfont icon-zuozhuan"></i>
+            <i data-action='rotate-right' class="iconfont icon-zuozhuan"></i>
+            <i data-action='flip-horizontal' class="iconfont icon-arrowsh"></i>
+            <i data-action='flip-vertical' class="iconfont icon-arrowsv"></i>
+            <i data-action='close' class="iconfont icon-close fy-crop-tbar-but"></i>
          </div>
     </div>
 </template>
