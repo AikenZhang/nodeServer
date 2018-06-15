@@ -23,4 +23,7 @@ html,body {
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
 }
+#app {
+  background: #f6f6f6;
+}
 </style>

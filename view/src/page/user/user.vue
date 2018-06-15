@@ -12,10 +12,24 @@
       </div> 
     </div>
     <mu-bottom-nav class="fy-user-order">
-      <mu-bottom-nav-item title="Recents" icon="restore"></mu-bottom-nav-item>
-      <mu-bottom-nav-item title="Favorites" icon="favorite"></mu-bottom-nav-item>
-      <mu-bottom-nav-item title="Nearby" icon="location_on"></mu-bottom-nav-item>
+      <mu-bottom-nav-item title="待发货" icon=":iconfont icon-daifahuo"></mu-bottom-nav-item>
+      <mu-bottom-nav-item title="已发货" icon=":iconfont icon-yifahuo"></mu-bottom-nav-item>
+      <mu-bottom-nav-item title="全部订单" icon=":iconfont icon-quanbudingdan01"></mu-bottom-nav-item>
     </mu-bottom-nav>
+    <mu-list>
+      <mu-list-item class="fy-list-item" button :ripple="false">
+        <mu-list-item-title>填写发货单</mu-list-item-title>
+        <mu-list-item-action>
+          <mu-icon value=":iconfont icon-jiantouyou"></mu-icon>
+        </mu-list-item-action>
+      </mu-list-item>
+      <mu-list-item class="fy-list-item" button :ripple="false">
+        <mu-list-item-title>账单</mu-list-item-title>
+        <mu-list-item-action>
+          <mu-icon value=":iconfont icon-jiantouyou"></mu-icon>
+        </mu-list-item-action>
+      </mu-list-item>
+   </mu-list>
   </div>
 </template>
 <script>
@@ -38,7 +52,7 @@ export default {
   background: #fff;
   display: flex;
   align-items: center;
-  margin-bottom:10px;
+  margin-bottom:8px;
 }
 .fy-user-left{
   padding: 0 20px;
@@ -72,7 +86,18 @@ export default {
 .fy-user-order{
   width:100%;
   height:100rpx;
-  background:#fff;
+  font-size:16px;
+}
+.mu-bottom-item{
+  color:#333;
+}
+.mu-bottom-item-active{
+  color:#f981a7;
+}
+.fy-list-item{
+  background: #fff;
+  font-size:16px;
+  margin-bottom: 1px;
 }
 </style>
 
