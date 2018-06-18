@@ -1,13 +1,13 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const SizeSchema = new Schema({
-    //尺寸id
+const ColorSchema = new Schema({
+    //颜色id
     key:{
         type:String,
         required:true
     },
-    //尺寸名称
+    //颜色名称
     value:{
         type:String,
         required:true
@@ -23,7 +23,7 @@ const SizeSchema = new Schema({
         }
     }
 })
-SizeSchema.pre('save', function (next) {
+ColorSchema.pre('save', function (next) {
     if (this.isNew) {
         this.meta.createdAt = this.meta.updatedAt = Date.now()
     } else {
@@ -31,4 +31,4 @@ SizeSchema.pre('save', function (next) {
     }
     next() 
 })
-mongoose.model('fy_sizes',SizeSchema)
+mongoose.model('fy_colors',ColorSchema)

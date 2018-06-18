@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-let UserModel = mongoose.model('users')
+let UserModel = mongoose.model('fy_users')
 export class UserDao {
     //登录
     async login(openId, userInfo) {

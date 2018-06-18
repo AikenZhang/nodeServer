@@ -3,12 +3,12 @@ const Schema = mongoose.Schema
 
 const TypeSchema = new Schema({
     //类型编号
-    id:{
+    key:{
         type:String,
         required:true
     },
     //类型名称
-    name:{
+    value:{
         type:String,
         required:true
     },
@@ -31,4 +31,4 @@ TypeSchema.pre('save', function (next) {
     }
     next() 
 })
-mongoose.model('type',TypeSchema)
+mongoose.model('fy_types',TypeSchema)

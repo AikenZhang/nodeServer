@@ -9,7 +9,7 @@ const ProductSchema = new Schema({
     },
     //产品类别
     type:{
-        type:[String]
+        type:Array
     },
     //标题
     title:{
@@ -21,7 +21,10 @@ const ProductSchema = new Schema({
     },
     //尺寸
     size:{
-        type:[String]
+        type:Array
+    },
+    color:{
+        type:Array
     },
     //价格
     price: {
@@ -74,4 +77,4 @@ ProductSchema.pre('save', function (next) {
     }
     next() 
 })
-mongoose.model('products',ProductSchema)
+mongoose.model('fy_products',ProductSchema)

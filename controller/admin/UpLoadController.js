@@ -29,10 +29,19 @@ export class UpLoad {
     }
     @Post('/getprodinfo')
     async getProdInfo () {
-        let data = await upLoadService.getProdInfo()
-        ctx.body =new Result({
-            code: '0',
-            data: data
-        })
+        try{
+            let data = await upLoadService.getProdInfo()
+            ctx.body =new Result({
+                code: '0',
+                data: data
+            })
+        }catch(e){
+            ctx.body =new Result({
+                code: '-1',
+                data: data,
+                errMSg: '网络错误'
+            })
+        }
+       
     }
 }

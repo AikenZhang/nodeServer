@@ -29,7 +29,7 @@ const useMiddleWares = (app) => {
     //添加body 解析
     app.use(bodyParser())
     //挂载请求拦截
-    //app.use(Interception())
+    app.use(Interception())
     // 挂载修饰符解析器
     await useMiddleWares(app)
     app.listen(3345)

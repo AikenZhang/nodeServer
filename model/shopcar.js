@@ -1,32 +1,29 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const UserSchema = new Schema({
-    nickNam: {
-        type: String,
+const shopCarSchema = new Schema({
+    //商品id
+    id:{
+        type:String,
         required:true
     },
-    name: {
-        type: String
+    color:{
+        type:String
     },
-    CarID:{
-        type: String
+    size:{
+        type:String
     },
-    sex: {
-        type: String
+    count:{
+        type:Number,
+        required:true
     },
-    openId: {
-        type: String,
-        required: true
+    userId:{
+        type:String
     },
-    session_key: {
-        type: String,
-        required: true
+    is_vaild:{
+        type:String,
+        default:"0"
     },
-    imgUrl:String,
-    tel: String,
-    age: Number,
-    address: [String],
     meta: {
         createdAt: {
             type: Date,
@@ -38,7 +35,7 @@ const UserSchema = new Schema({
         }
     }
 })
-UserSchema.pre('save', function (next) {
+shopCarSchema.pre('save', function (next) {
     if (this.isNew) {
         this.meta.createdAt = this.meta.updatedAt = Date.now()
     } else {
@@ -46,4 +43,4 @@ UserSchema.pre('save', function (next) {
     }
     next() 
 })
-mongoose.model('fy_users',UserSchema)
+mongoose.model('fy_shopcars',shopCarSchema)

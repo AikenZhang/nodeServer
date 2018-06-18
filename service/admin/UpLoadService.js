@@ -1,7 +1,8 @@
-const { ProductDao } = require('../../dao/product/ProductDao.js')
+const { ProductDao } = require('../../dao/ProductDao.js')
 const productDao = new ProductDao()
 export class UpLoadService {
   async saveUpLoadInfo (info) {
+   info.tag = info.tag.split(',')
    return  productDao.saveProdInfo(info)
   }
   async getProdInfo () {

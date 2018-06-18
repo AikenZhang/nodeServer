@@ -8,18 +8,21 @@
         </mu-form-item>
         <mu-form-item label="产品类别" prop='type' :rules='rules.selectRules'>
         <mu-select  multiple chips v-model="validateForm.type" full-width>
-            <mu-option v-for="item in type" :key="item.typeId" :label="item.typeName" :value="item.typeId"></mu-option>
+            <mu-option v-for="item in type" :key="item.key" :label="item.value" :value="item.key"></mu-option>
         </mu-select>
         </mu-form-item>
-        <mu-form-item label="标签" prop='tag' :rules='rules.selectRules'>
-          <mu-select  multiple chips v-model="validateForm.tag" full-width>
-              <mu-option v-for="item in type" :key="item.typeId" :label="item.typeName" :value="item.typeId"></mu-option>
+        <mu-form-item label="颜色" prop='color' :rules='rules.selectRules'>
+          <mu-select  multiple chips v-model="validateForm.color" full-width>
+              <mu-option v-for="item in color" :key="item.key" :label="item.value" :value="item.key"></mu-option>
           </mu-select>
         </mu-form-item>
         <mu-form-item label="产品尺寸" prop='size' :rules='rules.selectRules'>
           <mu-select  multiple chips v-model="validateForm.size" full-width>
-              <mu-option v-for="item in type" :key="item.typeId" :label="item.typeName" :value="item.typeId"></mu-option>
+              <mu-option v-for="item in size" :key="item.key" :label="item.value" :value="item.key"></mu-option>
           </mu-select>
+        </mu-form-item>
+        <mu-form-item label="产品标签" prop='tag' :rules='rules.tagRules'>
+           <mu-text-field placeholder='标签以","为间隔' v-model="validateForm.tag" prop="tag"></mu-text-field>
         </mu-form-item>
         <mu-form-item label="产品星级" prop='start' :rules='rules.startRules'>
           <mu-text-field placeholder="请输入产品星级" v-model.number='validateForm.start'></mu-text-field>
@@ -28,7 +31,7 @@
             <mu-text-field placeholder="请输入产品库存" v-model.number='validateForm.count'></mu-text-field>
           </mu-form-item>
         <mu-form-item prop='introduction' label='商品详细说明' :rules='rules.textFieldRules'>
-          <mu-text-field placeholder="不允许超过60个字符" v-model='validateForm.introduction' multi-line :rows="3" :max-length="60"></mu-text-field>
+          <mu-text-field placeholder="不允许超过60个字符" v-model='validateForm.introduction' multi-line :rows="3" :max-length="120"></mu-text-field>
         </mu-form-item>
         <mu-form-item label='选择图片' prop='files' :rules='rules.selectRules'>
           <upload v-model="validateForm.files" :choseImgCount = '1'></upload>
@@ -62,34 +65,14 @@ export default {
         ],
         startRules:[
           { validate:(val) => val < 6 && val > 0,message: '数值必须大于0,小于6'}
+        ],
+        tagRules: [
+          { validate: (val) => val != '' && val.split(",").length > 0 && val.split(",").length < 4 , message: "至少添加一个标签,最多三个标签" }
         ]
       },
-      type: [
-        {
-          typeId: "001",
-          typeName: "衣服"
-        },
-        {
-          typeId: "002",
-          typeName: "衣服"
-        },
-        {
-          typeId: "003",
-          typeName: "衣服"
-        },
-        {
-          typeId: "004",
-          typeName: "衣服"
-        },
-        {
-          typeId: "005",
-          typeName: "衣服"
-        },
-        {
-          typeId: "006",
-          typeName: "衣服"
-        }
-      ],
+      size:[],
+      type:[],
+      color:[],
       validateForm: {
         title: "",
         price: 0,
@@ -99,7 +82,8 @@ export default {
         introduction: "",
         files: [],
         start:0,
-        tag:[]
+        tag:[],
+        color:[]
       }
     }
   },
@@ -116,6 +100,15 @@ export default {
       for (let i in me.validateForm) {
         if (i !== 'files'){
           temp[i] = me.validateForm[i]
+        }
+        if (i == 'size') {
+          temp[i] = me._Format(me.validateForm[i],me.size)
+        }
+        if (i == 'color') {
+          temp[i] = me._Format(me.validateForm[i],me.color)
+        }
+        if (i == 'type') {
+          temp[i] = me._Format(me.validateForm[i],me.type)
         }
       }
       formData.append("fields",JSON.stringify(temp))
@@ -150,7 +143,35 @@ export default {
         start:0,
         tag:[]
       }
+    },
+    //重新格式化 size，type，color
+    _Format (a,b) {
+      let newData = []
+       for (let i=0;i<a.length;i++){
+         for (let e=0;e<b.length;e++){
+            if (a[i] == b[e].key) {
+              newData.push({
+                "key":b[e].key,
+                "value":b[e].value
+              })
+            } 
+         }
+       }
+       return newData
     }
+  },
+  mounted () {
+    let me = this
+    request({
+      url: 'product/getprodinfo'
+    }).then((result) => {
+      if (result && result.code == '0') {
+         let data = result.data
+         me.size = data.size
+         me.color = data.color
+         me.type = data.type
+      }
+    })
   }
 };
 </script>

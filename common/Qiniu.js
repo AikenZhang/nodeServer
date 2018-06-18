@@ -23,6 +23,7 @@ export class QiNiu {
                 }
                 if (respInfo.statusCode == 200) {
                   resolve({
+                      id:Date.now.toString,
                       src: fileName,
                       respBody: respBody
                   })

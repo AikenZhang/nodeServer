@@ -29,4 +29,4 @@ categorySchema.pre('save', function (next) {
     }
     next() 
 })
-mongoose.model('category',categorySchema)
+mongoose.model('fy_categorys',categorySchema)

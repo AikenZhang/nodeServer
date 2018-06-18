@@ -28,15 +28,13 @@ export class UserController {
             }
         }) 
     }
+    //获取用户信息
     @Post('/getuserinfo')
-    @Log
     async getUserInfo (cxt,next) {
-        const authToken = cxt.request.header['author-token']
-        let token = deToken(authToken)
-        console.log(token)
+        let token = cxt.request.token
+        console.log(cxt.request)
         let data =await userService.getUserInfo(token.openId)
         if (data) {
-            console.log(data)
             cxt.body = new Result({
                 code: '0',
                 data: data
@@ -44,12 +42,29 @@ export class UserController {
         }
         
     }
-    @Post('/add')
+    //添加购物车
+    @Post('/addshopCar')
     async add (ctx,next) {
-        ctx.body = new Result({
-            code: '0',
-            data:'你啊吼',
-            errMSg:'登录过期了呀'
-        })
+        //try {
+            let param = JSON.parse(ctx.request.body.param)
+            let userId = ctx.request.token.openId
+            let info = {
+                ...param,
+                userId
+            }
+            let data = await userService.addShopCar(info)
+            if (data) (
+                ctx.body = new Result({
+                    code: '0',
+                    data:true
+                })
+            )
+           
+       // }catch(e){
+            // ctx.body = new Result({
+            //     code: '-1',
+            //     errMSg:'网络错误'
+            // })
+        //}
     }
 }

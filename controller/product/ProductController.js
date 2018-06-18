@@ -7,19 +7,35 @@ let productService = new ProductService()
 export class ProductController {
     @Post('/getprolist')
     async getProductList (ctx,next) {
-       let type = ctx.request.body.type || '0'
-       let openId = ctx.request.token.openId
-       let proList = await productService.getProdList(openId,type)
-       ctx.response.body = new Result({
-           data:'sdfs',
-           code: '111'
-       })
-       ctx.response.status = 200
+       let param = ctx.request.body.param
+       console.log(ctx.response.body)
+       try{
+         let proList = await productService.getProdList(param)
+         ctx.response.body = new Result({
+            code:'0',
+            data: proList
+        })
+       }catch(e){
+        ctx.response.body = new Result({
+            code:'-1',
+            errMsg: "网络错误"
+        })
+       }
     }
-
-    @Post('/uploadfile')
+    //获取商品的基本信息
+    @Post('/getprodinfo')
     async upLoadFile (ctx,next) {
-        let params = ctx.request.body
-
-    }
+       try{
+        let info = await productService.getProdInfo()
+        ctx.body = new Result({
+            code: '0',
+            data:info
+        })
+       }catch (e) {
+        ctx.response.body = new Result({
+            code:'-1',
+            errMsg: "网络错误"
+        })
+       }
+     }
 }
