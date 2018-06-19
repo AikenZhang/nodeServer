@@ -1,11 +1,15 @@
-const { ProductDao } = require('../../dao/ProductDao.js')
+const { ProductDao } = require('../dao/ProductDao.js')
 let productDao = new ProductDao()
 export class ProductService {
+  async saveUpLoadInfo (info) {
+    //将tag 转化为数组保存
+    info.tag = info.tag.split(',')
+    return  productDao.saveProdInfo(info)
+   }
     //获取商品列表
     async getProdList(param) {
         return productDao.getProdList(param)
     }
-
     //获取商品的基本信息
     async getProdInfo () {
         let color = await productDao.getColor()
@@ -16,5 +20,5 @@ export class ProductService {
             size,
             type
         })
-    }
+    } 
 }

@@ -17,28 +17,29 @@ const comparToken = (token) => {
 }
 
 export const Interception = () => async (cxt, next) => {
-    if (cxt.request.url !== '/user/login') {
-        //登录拦截 查看是否带有token
-        const authToken = cxt.request.header['author-token']
-        let t,token
-        if (authToken && authToken !== 'null') {
-             //检验token的正确性
-            t = comparToken(authToken)
-            token = deToken(authToken)
-        }
-        //查看是否过期
-        if ( !t || token.exp < new Date().getTime()) {
-            console.log('登录过期')
-            cxt.body = new Result({
-                code: '111',
-                errMSg: '登录过期'
-            })
-        } else {
-            cxt.request.token = token
-            await next()
-        }
-    }else {
+    if (cxt.request.url == '/wx/user/login' || cxt.request.url == '/admin/user/login' ) {
         await next()
+    }
+    else {
+         //登录拦截 查看是否带有token
+         const authToken = cxt.request.header['author-token']
+         let t,token
+         if (authToken && authToken !== 'null') {
+              //检验token的正确性
+             t = comparToken(authToken)
+             token = deToken(authToken)
+         }
+         //查看是否过期
+         if ( !t || token.exp < new Date().getTime()) {
+             console.log('登录过期')
+             cxt.body = new Result({
+                 code: '111',
+                 errMSg: '登录过期'
+             })
+         } else {
+             cxt.request.token = token
+             await next()
+         }
     }
    
 }

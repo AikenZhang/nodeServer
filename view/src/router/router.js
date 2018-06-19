@@ -4,24 +4,18 @@ export default [
     {
       path: '/',
       name: 'login',
+      redirect:'/login'
+    },{
+      path: '/login',
+      name: 'login',
       component: _import('page/login/login.vue')
-    },{
-      path: '/uploadItem',
-      name: 'uploadItem',
-      component: _import('components/upload')
-    },{
-      path:"/up",
-      name:'crop',
-      component: _import('components/cropper/src/main.vue')
-    },{
-      path:"/loading",
-      name:'load',
-      component: _import('components/loading/src/main.vue')
-    },{
-      path:"/img",
-      name:'img',
-      component: _import('components/imgpreview/src/main.vue')
-    },{
+    },
+    {
+      path: '/registry',
+      name: 'registry',
+      component: _import('page/login/registry.vue')
+    },
+    {
        path: '/index',
        name: 'index',
        redirect:'/upload',

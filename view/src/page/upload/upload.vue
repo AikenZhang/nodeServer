@@ -119,7 +119,7 @@ export default {
         message: "正在上传..."
       })
       request({
-        url: 'admin/upload',
+        url: 'admin/upload/upload',
         data: formData
       }).then((data) => {
         if (data.code == '0') {

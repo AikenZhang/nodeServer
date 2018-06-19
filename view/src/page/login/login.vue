@@ -12,8 +12,10 @@
           <mu-form-item label="密码" prop="password" :rules="passwordRules">
             <mu-text-field type="password" v-model="validateForm.password" prop="password"></mu-text-field>
           </mu-form-item>
-          <mu-button color="primary" @click="submit">提交</mu-button>
-          <mu-button @click="clear">重置</mu-button>
+          <div class="fy-from-but">
+            <mu-button color="primary" @click="submit">提交</mu-button>
+            <mu-button @click="clear">重置</mu-button>
+          </div>
         </mu-form>
       </div>
     </div>
@@ -22,6 +24,8 @@
 
 <script>
 import request from '@/util/request.js'
+import md5 from 'blueimp-md5'
+import { token } from '@/util/common.js'
 export default {
    data () {
     return {
@@ -34,7 +38,6 @@ export default {
         { validate: (val) => !!val, message: '必须填写密码'},
         { validate: (val) => val.length >= 3 && val.length <= 10, message: '密码长度大于3小于10'}
       ],
-      argeeRules: [{ validate: (val) => !!val, message: '必须同意用户协议'}],
       validateForm: {
         username: '',
         password: ''
@@ -43,26 +46,40 @@ export default {
   },
   methods: {
     submit () {
-      console.log(this.$refs.form.validate())
+      let me = this
+      if ( ! this.$refs.form.validate()) {
+        return 
+      }
+      console.log(me.validateForm.username,md5(me.validateForm.password))
       request({
-        url: 'user/add',
+        url: 'admin/user/login',
         method: 'post',
         data: {
-          name: '111'
+          param:JSON.stringify({
+            userName: me.validateForm.username,
+            passWord: md5(me.validateForm.password)
+          })
         }
       }).then((result) => {
         if (result && result.code == '0'){
-           console.log(result)
+           if (result.data) {
+             token.setToken(result.data)
+             me.$notice({
+               type:'success',
+               message: '登录成功'
+             })
+             setTimeout(() => {
+               me.$route.push('/upload')
+             },1500)
+           }
         }
-       
       })
     },
     clear () {
       this.$refs.form.clear();
       this.validateForm = {
         username: '',
-        password: '',
-        isAgree: false
+        password: ''
       };
     }
   }
@@ -107,5 +124,11 @@ export default {
 }
 .mu-form-item,.mu-form-item-content{
   margin-bottom:10px;
+}
+.fy-from-but {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height:1rem;
 }
 </style>

@@ -3,8 +3,7 @@ const Schema = mongoose.Schema
 
 const UserSchema = new Schema({
     nickNam: {
-        type: String,
-        required:true
+        type: String
     },
     name: {
         type: String
@@ -15,13 +14,23 @@ const UserSchema = new Schema({
     sex: {
         type: String
     },
-    openId: {
+    UserId: {
         type: String,
         required: true
     },
+    passWord:{
+        tytpe:String
+    },
+    userType:{
+        type:String
+    },
     session_key: {
-        type: String,
-        required: true
+        type: String
+    },
+    //废除标记
+    is_vaild:{
+        type:String,
+        default:0
     },
     imgUrl:String,
     tel: String,

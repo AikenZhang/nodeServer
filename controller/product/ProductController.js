@@ -1,5 +1,5 @@
 const { Controller,Post} = require('../BaseController.js')
-const { ProductService } = require('../../service/product/ProductService.js')
+const { ProductService } = require('../../service/ProductService.js')
 const { Result } = require('../../common/Result.js')
 
 let productService = new ProductService()
@@ -24,7 +24,7 @@ export class ProductController {
     }
     //获取商品的基本信息
     @Post('/getprodinfo')
-    async upLoadFile (ctx,next) {
+    async getProdInfo (ctx,next) {
        try{
         let info = await productService.getProdInfo()
         ctx.body = new Result({
