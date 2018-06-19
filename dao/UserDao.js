@@ -8,7 +8,7 @@ export class UserDao {
     async login(openId, userInfo) {
         return new Promise((resolve, rej) => {
             UserModel.findOne({
-                UserId: openId.openid
+                userId: openId.openid
             }, (er, adv) => {
                 if (!er && !adv) {
                     UserModel.insertMany([{
@@ -16,7 +16,7 @@ export class UserDao {
                         address: [
                             userInfo.country + " " + userInfo.city
                         ],
-                        UserId: openId.openid,
+                        userId: openId.openid,
                         session_key: openId.session_key,
                         imgUrl: userInfo.avatarUrl,
                         userType: '1'
@@ -26,7 +26,7 @@ export class UserDao {
                     })
                 } else {
                     UserModel.update({
-                        UserId: openId.openid,
+                        userId: openId.openid,
                         userType: '1'
                     }, {
                         nickNam: userInfo.nickName,
@@ -48,7 +48,7 @@ export class UserDao {
     async getUserInfo(openId) {
         return new Promise((resolve, rej) => {
             UserModel.findOne({
-                openId: openId,
+                userId: openId,
             }, {
                 nickNam: 1,
                 name: 1,
@@ -95,13 +95,14 @@ export class UserDao {
     }
     //平台用户注册
     async registry (param) {
-        let res = await this.getInfoByUserId(param.userName,'2')
         return new Promise((resolve,rej) => {
-            UserModel.find({
-                userId: param.userName,
+            UserModel.insertMany([{
+                userId:param.userName,
+                passWord: param.passWord,
+                tel: param.tel,
                 is_vaild: '0',
                 userType: '2'
-            },(err,doc) => {
+            }],(err,doc) => {
                 if (!err) resolve(doc)
                 else rej(err)
             })

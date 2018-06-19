@@ -2,6 +2,12 @@ const { Result } = require('./Result.js')
 const { appConfig } = require('../appConfig.js')
 const { deToken } = require('./MiniPro.js')
 const { cryptod } = require('./util.js')
+//不需要token验证白名单
+const passArr = [
+    '/wx/user/login',
+    '/admin/user/login',
+    '/admin/user/registry'
+]
 //token签名校验,保证信息的完整性
 const comparToken = (token) => {
     try{
@@ -17,7 +23,7 @@ const comparToken = (token) => {
 }
 
 export const Interception = () => async (cxt, next) => {
-    if (cxt.request.url == '/wx/user/login' || cxt.request.url == '/admin/user/login' ) {
+    if (passArr.indexOf(cxt.request.url) > 0 ) {
         await next()
     }
     else {

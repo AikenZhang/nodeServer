@@ -129,6 +129,7 @@ export default {
              message: '上传成功'
            })
         }
+        me.clear()
       })
     },
     clear () {

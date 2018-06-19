@@ -25,7 +25,11 @@ const request = (option) => {
                 }, 2000)
                 throw new Error(resu.errMSg)
             }
-        }else{
+            else if (resu && resu.code == '-1') {
+                throw new Error(resu.errMSg)
+            }
+        }
+        else{
            return resu
         }
     }).catch((e) => {

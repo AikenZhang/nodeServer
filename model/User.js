@@ -14,12 +14,12 @@ const UserSchema = new Schema({
     sex: {
         type: String
     },
-    UserId: {
+    userId: {
         type: String,
         required: true
     },
     passWord:{
-        tytpe:String
+        type:String
     },
     userType:{
         type:String

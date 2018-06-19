@@ -69,7 +69,7 @@ export default {
                message: '登录成功'
              })
              setTimeout(() => {
-               me.$route.push('/upload')
+               me.$router.push('/upload')
              },1500)
            }
         }
@@ -120,7 +120,7 @@ export default {
   color:#fff;
 }
 .mu-form-item__error .mu-form-item-help {
-  color:#F9E79F;
+  color:#f44336;
 }
 .mu-form-item,.mu-form-item-content{
   margin-bottom:10px;

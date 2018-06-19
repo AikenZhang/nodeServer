@@ -49,7 +49,7 @@ export default {
         ],
         passwordRules: [
           {
-            validate: () => {
+            validate: (val) => {
               let reg = /^[\w]{6,12}$/
               return reg.test(val)
             },
@@ -58,7 +58,7 @@ export default {
         ],
         telRules: [{
            validate: val => {
-              let reg = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/
+              let reg = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,3,5-9]))\d{8}$/
               return reg.test(val)
             },
             message: "请输入正确手机号"
@@ -91,7 +91,8 @@ export default {
         data: {
           param: JSON.stringify({
             userName: me.validateForm.username,
-            passWord: md5(me.validateForm.password)
+            passWord: md5(me.validateForm.password),
+            tel: me.validateForm.tel
           })
         }
       }).then(result => {
@@ -101,10 +102,11 @@ export default {
             me.$notice({
               type: "success",
               message: "注册成功"
-            });
+            })
+            //console.log()
             setTimeout(() => {
-              me.$route.push("/upload");
-            }, 1500);
+              me.$router.push("/login");
+            }, 2000);
           }
         }
       })
@@ -157,7 +159,7 @@ export default {
   color: #fff;
 }
 .mu-form-item__error .mu-form-item-help {
-  color: #f9e79f;
+  color:#f44336;
 }
 .mu-form-item,
 .mu-form-item-content {

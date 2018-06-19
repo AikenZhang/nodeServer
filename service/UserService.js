@@ -17,8 +17,6 @@ export class UserService {
     //平台用户登录
     async adminLogin (param) {
         let result = await userDao.adminLogin(param)
-        console.log(result)
-        console.log("1")
         if (result && result.length > 0) {
             let token = createToken(param.userName)
             return Promise.resolve(token)
@@ -33,5 +31,16 @@ export class UserService {
     //添加购物车
     async addShopCar (info) {
         return shopCarDao.addShopCar(info)
+    }
+    // 平台用户注册
+    async adminRegistry (param) {
+        let a = await userDao.getInfoByUserId(param.userName,'2')
+        if (a && a.length > 0) {
+            return Promise.resolve({
+                code: '-1',
+                errMsg: '已经注册'
+            })
+        }
+        return await userDao.registry(param)
     }
 }

@@ -1,3 +1,5 @@
+import { REFUSED } from 'dns';
+
 const { Controller,Post,Get} = require('../BaseController.js')
 const { Result } = require('../../common/Result.js')
 const { UserService } = require('../../service/UserService.js')
@@ -17,7 +19,7 @@ export class UserController {
     }else{
       ctx.body = new Result({
         code: '-1',
-        data: '账号/密码错误'
+        errMSg: '账号/密码错误'
       })
     }
   }catch(e){
@@ -32,6 +34,16 @@ export class UserController {
   @Post('/registry')
   async registry (ctx,next) {
     let param = JSON.parse(ctx.request.body.param)
-    
+    let result = await userService.adminRegistry(param)
+    if (result && result.code == '-1') {
+      ctx.body = new Result({
+        code: '-1',
+        errMSg: result.errMsg
+      })
+    }else {
+      ctx.body = new Result({
+        code: '0',
+      })
+    }
   }
 }
