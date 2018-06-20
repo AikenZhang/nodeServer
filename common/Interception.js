@@ -23,7 +23,7 @@ const comparToken = (token) => {
 }
 
 export const Interception = () => async (cxt, next) => {
-    if (passArr.indexOf(cxt.request.url) > 0 ) {
+    if (passArr.indexOf(cxt.request.url) > -1 ) {
         await next()
     }
     else {

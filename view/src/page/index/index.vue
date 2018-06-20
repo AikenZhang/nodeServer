@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height:100%;width:100%;">
     <div class="fy-view">
       <router-view></router-view>
     </div>
@@ -18,15 +18,20 @@ export default {
 }
 }
 </script>
-<style scopd>
+<style scoped>
  .fy-tab-button {
    width:100%;
    height:1rem;
-   position:fixed;
+   position: absolute;
    bottom: 0;
    z-index:10;
    font-size:17px;
    background: #f981a7;
+ }
+ .fy-view {
+   overflow-y: scroll;
+   height: 100%;
+   width:100%;
  }
  .mu-bottom-item {
    color:#fff;

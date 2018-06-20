@@ -176,7 +176,7 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 .fy-scroll {
   width: 100%;
   height: 100%;

@@ -123,7 +123,7 @@ export default {
   }
 }
 </script>
-<style scopd>
+<style scoped>
 .login {
   position: absolute;
   top: 0;

@@ -5,7 +5,7 @@
         <img :src="logo" />
       </div>
       <div class="fy-login">
-        <mu-form ref="form" :model="validateForm" :autoValidate='false' class="mu-demo-form">
+        <mu-form ref="form" :model="validateForm"  class="mu-demo-form">
           <mu-form-item label="用户名"  prop="username" :rules="usernameRules">
             <mu-text-field v-model="validateForm.username" prop="username"></mu-text-field>
           </mu-form-item>
@@ -85,7 +85,7 @@ export default {
   }
 }
 </script>
-<style scopd>
+<style scoped>
 .login{
     position:absolute;
     top:0;
@@ -114,10 +114,6 @@ export default {
 .mu-form {
   width:90%;
   margin:0 auto;
-}
-.mu-form-item-label,.mu-form-item-help{
-  font-size:16px; 
-  color:#fff;
 }
 .mu-form-item__error .mu-form-item-help {
   color:#f44336;
