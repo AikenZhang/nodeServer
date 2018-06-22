@@ -34,28 +34,5 @@ export class UserController {
         }
         
     }
-    //添加购物车
-    @Post('/addshopCar')
-    async add (ctx,next) {
-        try {
-            let param = JSON.parse(ctx.request.body.param)
-            let userId = ctx.request.token.openId
-            let info = {
-                ...param,
-                userId
-            }
-            let data = await userService.addShopCar(info)
-            if (data) (
-                ctx.body = new Result({
-                    code: '0',
-                    data:true
-                })
-            )        
-       }catch(e){
-            ctx.body = new Result({
-                code: '-1',
-                errMSg:'网络错误'
-            })
-        }
-    }
+
 }

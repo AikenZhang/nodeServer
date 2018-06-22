@@ -39,7 +39,7 @@ const ProductSchema = new Schema({
     start: {
         type:Number
     },
-    //用户Id
+    //商户Id
     userId:{
         type:String
     },

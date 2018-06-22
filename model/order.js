@@ -1,43 +1,58 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const shopCarSchema = new Schema({
-    //商品id
+const OrderSchema = new Schema({
+    //订单Id
     id:{
         type:String,
         required:true
     },
-    color:{
+    //用户Id
+    openId:{
         type:String
+    },
+    //商户Id
+    userId:{
+      type:String
+    },
+    //价格
+    price:{
+        type:Number
+    },
+    //数量
+    count:{
+        type:Number
     },
     size:{
         type:String
     },
-    count:{
-        type:Number,
-        required:true
-    },
-    openId:{
+    color:{
         type:String
     },
-    src:{
-      type:String
-    },
-    title:{
-        type:String
-    },
-    price:{
-        type:Number
+    //是否发货
+    is_ship:{
+        type:String,
+        default: '0'
     },
     //删除标记 0：不删除  1: 删除
     is_vaild:{
         type:String,
         default:"0"
     },
-    //是否已经生成了订单  0 ：否 1：是
-    is_order: {
-        type:String,
-        default: '0'
+    //是否支付
+    is_pay: {
+      type:String,
+      default: '0'
+    },
+    //地址
+    address: {
+      type:String,
+      required:true
+    },
+    //电话
+    tel:{
+      type:String,
+      required:true
     },
     meta: {
         createdAt: {
@@ -50,7 +65,7 @@ const shopCarSchema = new Schema({
         }
     }
 })
-shopCarSchema.pre('save', function (next) {
+OrderSchema.pre('save', function (next) {
     if (this.isNew) {
         this.meta.createdAt = this.meta.updatedAt = Date.now()
     } else {
@@ -58,4 +73,4 @@ shopCarSchema.pre('save', function (next) {
     }
     next() 
 })
-mongoose.model('fy_shopcars',shopCarSchema)
+mongoose.model('fy_orders',OrderSchema)

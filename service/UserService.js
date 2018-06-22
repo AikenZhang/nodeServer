@@ -28,10 +28,6 @@ export class UserService {
     async getUserInfo (openId) {
         return userDao.getUserInfo(openId)
     }
-    //添加购物车
-    async addShopCar (info) {
-        return shopCarDao.addShopCar(info)
-    }
     // 平台用户注册
     async adminRegistry (param) {
         let a = await userDao.getInfoByUserId(param.userName,'2')

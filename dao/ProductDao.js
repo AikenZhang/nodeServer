@@ -5,7 +5,13 @@ let SizeModel = mongoose.model('fy_sizes')
 let ColorModel = mongoose.model('fy_colors')
 const { BaseDao } = require('./BaseDao.js')
 export class ProductDao extends BaseDao {
-    //获取商品列表
+    /**
+     *获取商品列表
+     *
+     * @param {*} param
+     * @returns
+     * @memberof ProductDao
+     */
     async getProdList (param) {
         if (param.prodId) {
             return new Promise((resolve,rej) =>{
@@ -49,7 +55,13 @@ export class ProductDao extends BaseDao {
         
         
     }
-    //添加商品信息
+    /**
+     *添加商品信息
+     *
+     * @param {*} info
+     * @returns
+     * @memberof ProductDao
+     */
     async saveProdInfo (info) {
         return new Promise((resolve,rej) => {
             ProductModel.insertMany({
@@ -61,7 +73,12 @@ export class ProductDao extends BaseDao {
             })
         })
     }
-    //获取产品类型
+    /**
+     * 获取产品类型
+     *
+     * @returns
+     * @memberof ProductDao
+     */
     async getType () {
         return new Promise((resolve,rej) => {
             TypeModel.find({},(err,doc) => {
@@ -70,7 +87,13 @@ export class ProductDao extends BaseDao {
             })
         })
     }
-    //获取产品尺寸
+   
+    /**
+     * 获取产品尺寸
+     *
+     * @returns
+     * @memberof ProductDao
+     */
     async getSize() {
         return new Promise((resolve,rej) => {
             SizeModel.find({},(err,doc) => {
@@ -80,10 +103,35 @@ export class ProductDao extends BaseDao {
         })
     }
 
-    //获取产品颜色
+
+    /**
+     * 获取产品颜色
+     *
+     * @returns
+     * @memberof ProductDao
+     */
     async getColor () {
         return new Promise((resolve,rej) => {
             ColorModel.find({},(err,doc) => {
+                if(!err) resolve(doc)
+                else rej(err)
+            })
+        })
+    }
+    /**
+     * 通过Id 获取产品信息
+     *
+     * @param {Array} prodId
+     * @memberof ProductDao
+     */
+    async getProdById (prodId) {
+        return new Promise((resolve,rej) => {
+            ProductModel.find({
+                id:{
+                    $in:prodId
+                },
+                is_vaild: '0'
+            },(err,doc)=> {
                 if(!err) resolve(doc)
                 else rej(err)
             })

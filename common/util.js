@@ -51,3 +51,8 @@ export const resolveUserData = (sessionKey, appId, encryptedData, iv) => {
 
     return decoded
 }
+
+export const fyId = () => {
+    let random = Math.floor(Math.random()*999) + 0
+    return Date.now().toString() + random.toString()
+}
