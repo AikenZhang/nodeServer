@@ -12,12 +12,12 @@ const passArr = [
 const comparToken = (token) => {
     try{
         let rawData = token.split('.').slice(0,2).join('.')
-        console.log(rawData)
+       // console.log(rawData)
         let signa = token.split('.')[2]
-        console.log(signa)
+        //console.log(signa)
         return cryptod.crypto(rawData, appConfig.serviceSecret) == signa
     }catch(e) {
-        console.log(e)
+       // console.log(e)
     }
    
 }

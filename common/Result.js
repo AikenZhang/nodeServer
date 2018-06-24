@@ -2,10 +2,10 @@ export class Result {
     constructor ({
         code = '0',
         data = [],
-        errMSg = ''
+        errMsg = ''
     }) {
         this.code = code 
         this.data = data
-        this.errMSg = errMSg
+        this.errMsg = errMsg
     } 
 }

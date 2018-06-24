@@ -1,11 +1,9 @@
-const {
-    ProductDao
-} = require('../dao/ProductDao.js')
+const { ProductDao } = require('../dao/ProductDao.js')
 let productDao = new ProductDao()
-const {
-    ShopCarDao
-} = require('../dao/ShopCarDao.js')
+const { ShopCarDao } = require('../dao/ShopCarDao.js')
+const { CollectDao } = require('../dao/CollectDao.js')
 const shopCarDao = new ShopCarDao()
+const collectDao = new CollectDao()
 export class ProductService {
     async saveUpLoadInfo(info) {
         //将tag 转化为数组保存
@@ -57,5 +55,30 @@ export class ProductService {
     async getshopCar(openId) {
         return shopCarDao.getShopCar(openId)
     }
-
+    
+    //更改购物车数量改变
+    async updateShopCarCount (openId,prodId,count) {
+        return shopCarDao.updateShopCarCount(openId,prodId,count)
+    }
+    //通过Id获取购物车信息
+    async getShopCarById (prodId,openId) {
+        return shopCarDao.getShopCarById(prodId,openId)
+    }
+    //删除购物车
+    async deleteShopCar (prodId,openId) {
+        return shopCarDao.deleteShopCar(prodId,openId)
+    }
+    //获取收藏
+    async getCollect (prodId,openId) {
+        return collectDao.getCollect(prodId,openId)
+    }
+    //更新收藏状态
+    async updateCollect (param,openId) {
+        //取消收藏
+        if (param.code == '0') {
+          return collectDao.deleteCollect(param.id,openId)
+        }else {
+          return collectDao.addCollect(param.id,openId)
+        }
+    }
 }

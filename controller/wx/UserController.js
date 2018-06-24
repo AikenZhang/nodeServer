@@ -34,5 +34,15 @@ export class UserController {
         }
         
     }
+    //获取用户的收货地址
+    @Post('/getaddress')
+    async getAddress (ctx,next) {
+        let openId = ctx.request.token.openId
+        let data = await userService.getAddress(openId)
+        ctx.body = new Result({
+            code: '0',
+            data
+        })
+    }
 
 }

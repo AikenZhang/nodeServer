@@ -7,6 +7,10 @@ const OrderSchema = new Schema({
         type:String,
         required:true
     },
+    prodId:{
+        type:String,
+        required:true
+    },
     //用户Id
     openId:{
         type:String
@@ -27,6 +31,10 @@ const OrderSchema = new Schema({
         type:String
     },
     color:{
+        type:String
+    },
+    //图片信息
+    src:{
         type:String
     },
     //是否发货
@@ -53,6 +61,10 @@ const OrderSchema = new Schema({
     tel:{
       type:String,
       required:true
+    },
+    //订单人名字
+    name:{
+      type:String
     },
     meta: {
         createdAt: {

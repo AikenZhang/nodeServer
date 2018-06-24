@@ -64,4 +64,61 @@ export class ShopCarDao  {
             })
         })
    }
+   //更新购物车数量
+   async updateShopCarCount (openId,prodId,count) {
+     return new Promise((resolve,rej) => {
+        shopCarModel.update({
+            openId,
+            id:prodId,
+            is_vaild: '0'
+       },{
+           $set:{
+               count
+           }
+       },(err,doc) => {
+        if(!err)resolve(doc)
+        else rej(err)
+       })
+     }) 
+   }
+   //删除购物车
+   async deleteShopCar (prodIdArr,openId) {
+       return new Promise((resolve,rej) =>{
+        shopCarModel.update({
+            id:{
+                $in:prodIdArr
+            },
+            openId,
+            is_vaild: '0',
+            is_order: '0'
+        },{
+            $set: {
+                is_vaild: '1'
+            }
+        },(err,doc) => {
+            if(!err) resolve(doc)
+            else rej(err)
+        })
+       })  
+   }
+   //生成订单
+   async toOrder (prodIdArr,openId) {
+       return new Promise((resolve,rej) =>{
+        shopCarModel.updateMany({
+            id:{
+                $in:prodIdArr
+            },
+            openId,
+            is_vaild: '0',
+            is_order: '0'
+        },{
+            $set: {
+                is_order: '1'
+            }
+        },(err,doc) => {
+            if(!err) resolve(doc)
+            else rej(err)
+        })
+       })
+   }
 }

@@ -4,6 +4,7 @@ let TypeModel = mongoose.model('fy_types')
 let SizeModel = mongoose.model('fy_sizes')
 let ColorModel = mongoose.model('fy_colors')
 const { BaseDao } = require('./BaseDao.js')
+const _ = require('lodash')
 export class ProductDao extends BaseDao {
     /**
      *获取商品列表
@@ -136,5 +137,25 @@ export class ProductDao extends BaseDao {
                 else rej(err)
             })
         })
+    }
+    //更改产品的数量
+    async updateCount (countArr) {
+        let result =[]
+        _.forEach(countArr,(v,k) => {
+            result.push(new Promise((resolve,rej) => {
+                ProductModel.update({
+                    id:v.id,
+                    is_vaild: '0'
+                },{
+                  $set:{
+                      count:v.count
+                  }
+                },(err,doc) =>{
+                    if(!err)resolve(doc)
+                    else rej(err)
+                })
+            }))
+        })
+      return Promise.all(result)
     }
 }

@@ -1,8 +1,12 @@
 const { UserDao } =require('../dao/UserDao.js')
 const { ShopCarDao } = require('../dao/ShopCarDao.js')
+const { AddressInfoDao } = require('../dao/addressInfoDao.js')
 const { createToken , getOpenId,deToken} = require('../common/MiniPro.js') 
+const { CollectDao } = require('../dao/CollectDao.js')
 const userDao =  new UserDao()
 const shopCarDao = new ShopCarDao()
+const addressInfoDao = new AddressInfoDao()
+const collectDao = new CollectDao()
 export class UserService {
     //微信用户登陆
     async wxLogin(code, userInfo) {
@@ -38,5 +42,14 @@ export class UserService {
             })
         }
         return await userDao.registry(param)
+    }
+    //获取用户收货地址
+    async getAddress (openId) {
+        return addressInfoDao.getAddress(openId)
+    }
+
+    //获取用的收藏
+    async getCollect (prodId,openId) {
+        return collectDao.getCollect(prodId,openId)
     }
 }

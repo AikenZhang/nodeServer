@@ -11,30 +11,30 @@ export class ProductController {
      * @param {*} next
      * @memberof ProductController
      */
-    @Post('/add')
+    @Post('/addorder')
     async addOrder (ctx,next) {
-    //try {
+    try {
         let openId = ctx.request.token.openId
         let param =JSON.parse(ctx.request.body.param)
         let result = await orderService.addOrder(param,openId)
  
-        if (result || result.code == '-2') {
+        if (result && result.code == '-2') {
             ctx.body = new Result({
                 code: '-2',
-                errMsg:result.errMSg
+                errMsg:result.errMsg
             })
         }else{
             ctx.body = new Result({
                 code:'0',
-                data:true
+                data:result.data
             })
         }
-    // }catch(e) {
-    //     ctx.body = new Result({
-    //         code: '-1',
-    //         errMsg: '网络错误'
-    //     })
-    // }
+    }catch(e) {
+        ctx.body = new Result({
+            code: '-1',
+            errMsg: '网络错误'
+        })
+    }
     }
   
 }
