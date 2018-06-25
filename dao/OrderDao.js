@@ -28,7 +28,8 @@ export class OrderDao {
         openId,
         is_vaild: '0',
         is_pay: '0',
-        is_ship: '0'
+        is_ship: '0',
+        is_end: '0'
       },(err,doc) => {
         if (!err) resolve(doc)
         else rej(err)
@@ -48,7 +49,8 @@ export class OrderDao {
         openId,
         is_vaild: '0',
         is_pay: '1',
-        is_ship: '1'
+        is_ship: '1',
+        is_end: '0'
       },(err,doc) => {
         if (!err) resolve(doc)
         else rej(err)
@@ -73,5 +75,24 @@ export class OrderDao {
         else rej(err)
       })
     })
+  }
+  //确认收货
+  async receiptOrder (_id) {
+    return new Promise((resolve,rej) => {
+      orderModel.update({
+        _id,
+        is_vaild: '0',
+        is_pay: '1',
+        is_ship: '1'
+      },{
+        $set:{
+          is_end:'1'
+        }
+      },(err,doc) => {
+        if(!err) resolve(doc)
+        else rej(err)
+      })
+    })
+    
   }
 }

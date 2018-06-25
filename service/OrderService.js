@@ -81,4 +81,9 @@ export class OrderService {
           default: return Promise.reject('没有此类型')
         }
     }
+
+    //确认收货
+    async receiptOrder (_id) {
+      return orderDao.receiptOrder(_id)
+    }
 }

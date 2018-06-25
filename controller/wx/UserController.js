@@ -69,13 +69,35 @@ export class UserController {
      */
     @Post('/getorder')
     async getPay (ctx,next) {
-        let openId = ctx.request.token.openId
-        let param = JSON.parse(ctx.request.body.param)
-        let result = await orderService.getOrder(openId,param.type)
-        ctx.body = new Result({
-            code: '0',
-            data:result
-        })
+        try{
+            let openId = ctx.request.token.openId
+            let param = JSON.parse(ctx.request.body.param)
+            let result = await orderService.getOrder(openId,param.type)
+            ctx.body = new Result({
+                code: '0',
+                data:result
+           })
+        }catch(e){
+            ctx.body = new Result({
+                code: '-1',
+                errMsg: '网络错误'
+            })
+        }
     }
-
+    //确认收货
+    @Post('/receiptOrder')
+    async receiptOrder (ctx,next) {
+        try{
+            let param = JSON.parse(ctx.request.body.param)
+            await orderService.receiptOrder(param._id)
+            ctx.body = new Result({
+                code: '0'
+            })
+        }catch(e){
+            ctx.body = new Result({
+                code: '-1',
+                errMsg: '网络错误'
+            })
+        }
+    }
 }
