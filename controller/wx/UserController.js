@@ -1,9 +1,11 @@
+import { OrderService } from '../../service/OrderService.js';
 
 const { Controller,Get,Post, Log} = require('../BaseController.js')
 const { UserService } = require('../../service/UserService.js')
 const { Result } = require('../../common/Result.js')
 const { createToken , getOpenId,deToken} = require('../../common/MiniPro.js') 
 const userService = new UserService()
+const orderService = new OrderService()
 @Controller('/wx/user')
 export class UserController {
     //用户登陆
@@ -20,7 +22,13 @@ export class UserController {
             }
         }) 
     }
-    //获取用户信息
+    /**
+     *获取用户信息
+     *
+     * @param {*} cxt
+     * @param {*} next
+     * @memberof UserController
+     */
     @Post('/getuserinfo')
     async getUserInfo (cxt,next) {
         let token = cxt.request.token
@@ -34,7 +42,13 @@ export class UserController {
         }
         
     }
-    //获取用户的收货地址
+    /**
+     * 获取用户的收货地址
+     *
+     * @param {*} ctx
+     * @param {*} next
+     * @memberof UserController
+     */
     @Post('/getaddress')
     async getAddress (ctx,next) {
         let openId = ctx.request.token.openId
@@ -42,6 +56,25 @@ export class UserController {
         ctx.body = new Result({
             code: '0',
             data
+        })
+    }
+   
+ 
+    /**
+     * 用户获取订单
+     *
+     * @param {*} ctx
+     * @param {*} next
+     * @memberof UserController
+     */
+    @Post('/getorder')
+    async getPay (ctx,next) {
+        let openId = ctx.request.token.openId
+        let param = JSON.parse(ctx.request.body.param)
+        let result = await orderService.getOrder(openId,param.type)
+        ctx.body = new Result({
+            code: '0',
+            data:result
         })
     }
 

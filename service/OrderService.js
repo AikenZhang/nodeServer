@@ -66,4 +66,19 @@ export class OrderService {
         })
       }
     }
+    /**
+     * 用户获取订单
+     *
+     * @param {*} openId 用户Id
+     * @param {*} type  1: 未支付 2：未收货 3：全部
+     * @memberof OrderService
+     */
+    async getOrder (openId,type) {
+        switch (type) {
+          case '1': return orderDao.getPayNo(openId);break;
+          case '2': return orderDao.getShipNo(openId);break;
+          case '3': return orderDao.getOrder(openId);break;
+          default: return Promise.reject('没有此类型')
+        }
+    }
 }

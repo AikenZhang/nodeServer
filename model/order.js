@@ -52,6 +52,11 @@ const OrderSchema = new Schema({
       type:String,
       default: '0'
     },
+    //是否交易完成
+    is_end:{
+      type:String,
+      default: '0'
+    },
     //地址
     address: {
       type:String,
