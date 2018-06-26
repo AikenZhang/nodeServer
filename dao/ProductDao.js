@@ -24,19 +24,6 @@ export class ProductDao extends BaseDao {
                     else rej(er)
                 })
             })
-        }
-        else if (param.type) {
-            return new Promise((resolve,rej) =>{
-                ProductModel.find({
-                    type:{
-                        "$in":type
-                    },
-                    is_vaild:'0'
-                },(er,doc) => {
-                    if (!er) resolve(doc)
-                    else rej(er)
-                })
-            })
         }else {
             return new Promise((resolve,rej) =>{
                 let query = [{
@@ -53,8 +40,38 @@ export class ProductDao extends BaseDao {
                 })
             })
         }
-        
-        
+    }
+
+    /**
+     * 商品排序
+     *
+     * @param {*} type 商品类别
+     * @param {*} key  依据什么排序
+     * @param {*} sort  排序方式
+     * @returns
+     * @memberof ProductDao
+     */
+    async ProdSort (type,key,sort) {
+        let key ={
+            '01':'meta.createdAt',
+            '02':'start',
+            '03':'price'
+        }
+        //排序字段
+        let field = key[key]
+        let querSort = {}
+        querSort[field] = sort
+        return new Promise((resolve,rej) =>{
+            ProductModel.find({
+                type:{
+                    "$in":type
+                },
+                is_vaild:'0'
+            },null,querSort,(er,doc) => {
+                if (!er) resolve(doc)
+                else rej(er)
+            })
+        })
     }
     /**
      *添加商品信息

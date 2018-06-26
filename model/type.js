@@ -12,6 +12,10 @@ const TypeSchema = new Schema({
         type:String,
         required:true
     },
+    //icon图标
+    icon:{
+        type:String
+    },
     meta: {
         createdAt: {
             type: Date,

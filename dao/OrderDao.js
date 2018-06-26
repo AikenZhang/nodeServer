@@ -30,6 +30,10 @@ export class OrderDao {
         is_pay: '0',
         is_ship: '0',
         is_end: '0'
+      },null,{
+        sort: {
+          "meta.createdAt":"desc"
+       }
       },(err,doc) => {
         if (!err) resolve(doc)
         else rej(err)
@@ -51,6 +55,10 @@ export class OrderDao {
         is_pay: '1',
         is_ship: '1',
         is_end: '0'
+      },null,{
+        sort: {
+          "meta.createdAt":"desc"
+       }
       },(err,doc) => {
         if (!err) resolve(doc)
         else rej(err)
@@ -70,6 +78,10 @@ export class OrderDao {
       orderModel.find({
         openId,
         is_vaild: '0'
+      },null,{
+        sort: {
+          "meta.createdAt":"desc"
+       }
       },(err,doc) => {
         if (!err) resolve(doc)
         else rej(err)

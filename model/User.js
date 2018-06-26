@@ -35,7 +35,12 @@ const UserSchema = new Schema({
     imgUrl:String,
     tel: String,
     age: Number,
-    address: [String],
+    wx:{
+        type:String
+    },
+    wxQRcode:{
+        type:String
+    },
     meta: {
         createdAt: {
             type: Date,

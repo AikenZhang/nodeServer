@@ -31,7 +31,8 @@ export class UserController {
      */
     @Post('/getuserinfo')
     async getUserInfo (cxt,next) {
-        let token = cxt.request.token
+        try{
+            let token = cxt.request.token
         console.log(cxt.request)
         let data =await userService.getUserInfo(token.openId)
         if (data) {
@@ -40,6 +41,13 @@ export class UserController {
                 data: data
             })
         }
+        }catch(e){
+            ctx.body = new Result({
+                code: '-1',
+                errMsg: '网络错误'
+            })
+        }
+        
         
     }
     /**
@@ -59,45 +67,27 @@ export class UserController {
         })
     }
    
- 
     /**
-     * 用户获取订单
+     * 获取商户的信息
      *
-     * @param {*} ctx
-     * @param {*} next
      * @memberof UserController
      */
-    @Post('/getorder')
-    async getPay (ctx,next) {
-        try{
-            let openId = ctx.request.token.openId
+    @Post('/getinfobyuserid')
+    async getInfoByUserId (ctx,next) {
+        //try {
             let param = JSON.parse(ctx.request.body.param)
-            let result = await orderService.getOrder(openId,param.type)
+            let data = await userService.getUserInfo(param.userId)
             ctx.body = new Result({
                 code: '0',
-                data:result
-           })
-        }catch(e){
-            ctx.body = new Result({
-                code: '-1',
-                errMsg: '网络错误'
+                data
             })
-        }
+        // }catch(e){
+        //     ctx.body = new Result({
+        //         code: '-1',
+        //         errMsg: '网络错误'
+        //     })
+        // }
     }
-    //确认收货
-    @Post('/receiptOrder')
-    async receiptOrder (ctx,next) {
-        try{
-            let param = JSON.parse(ctx.request.body.param)
-            await orderService.receiptOrder(param._id)
-            ctx.body = new Result({
-                code: '0'
-            })
-        }catch(e){
-            ctx.body = new Result({
-                code: '-1',
-                errMsg: '网络错误'
-            })
-        }
-    }
+ 
+   
 }

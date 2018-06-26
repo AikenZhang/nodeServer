@@ -40,7 +40,8 @@ export class OrderService {
              address:param.userInfo.address,
              tel:param.userInfo.tel,
              name:param.userInfo.name,
-             src:prod.files[0].src
+             src:prod[0].files[0].src,
+             title:prod[0].title
            })
            countArr.push({
              id:v.id,

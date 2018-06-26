@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const OrderSchema = new Schema({
-    //订单Id
+    //订单批次Id
     id:{
         type:String,
         required:true
@@ -18,6 +18,10 @@ const OrderSchema = new Schema({
     //商户Id
     userId:{
       type:String
+    },
+    //产品名称
+    title:{
+        type:String
     },
     //价格
     price:{
@@ -82,6 +86,17 @@ const OrderSchema = new Schema({
         }
     }
 })
+//添加虚拟字段 1 表示未支付  2 表示 未收货  3  表示完成
+OrderSchema.virtual('mode').get(function () {
+    if (this.is_pay == '0' && this.is_vaild == '0' && this.is_ship== '0' && this.is_end == '0' ) {
+        return '1'
+    }else if (this.is_pay == '1' && this.is_ship == '1' && this.is_vaild == '0' && this.is_end == '0') {
+        return '2'
+    }else if (this.is_pay == '1' && this.is_ship == '1' && this.is_vaild == '0' && this.is_end == '1') {
+        return '3'
+    }
+})
+OrderSchema.set('toJSON', { virtuals: true })
 OrderSchema.pre('save', function (next) {
     if (this.isNew) {
         this.meta.createdAt = this.meta.updatedAt = Date.now()

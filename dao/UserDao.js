@@ -13,9 +13,9 @@ export class UserDao {
                 if (!er && !adv) {
                     UserModel.insertMany([{
                         nickNam: userInfo.nickName,
-                        address: [
-                            userInfo.country + " " + userInfo.city
-                        ],
+                        // address: [
+                        //     userInfo.country + " " + userInfo.city
+                        // ],
                         userId: openId.openid,
                         session_key: openId.session_key,
                         imgUrl: userInfo.avatarUrl,
@@ -45,18 +45,10 @@ export class UserDao {
     }
 
     //获取用户信息
-    async getUserInfo(openId) {
+    async getUserInfo(userId) {
         return new Promise((resolve, rej) => {
             UserModel.findOne({
-                userId: openId,
-            }, {
-                nickNam: 1,
-                name: 1,
-                sex: 1,
-                imgUrl: 1,
-                tel: 1,
-                age: 1,
-                address: 1
+                userId: userId,
             }, (er, doc) => {
                 if (!er) resolve(doc)
                 else rej(er)
