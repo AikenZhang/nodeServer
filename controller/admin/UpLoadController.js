@@ -20,7 +20,7 @@ export class UpLoad {
             })
         }else {
             ctx.body = new Result({
-                errMSg: '上传失败',
+                errMsg: '上传失败',
                 code: '-1'
             })
         }

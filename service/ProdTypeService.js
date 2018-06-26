@@ -12,8 +12,15 @@ export class ProdTypeService {
   async getTypeList () {
      return typeDao.getTypeList()
   }
-
-  async prodSort (type,key,sort) {
-     return productDao.ProdSort()
+  
+  /**
+   * 产品排序
+   * type 产品类别
+   * key 排序类别
+   * sort 排序方式
+   * @memberof ProdTypeService
+   */
+  async prodSort ({type,key,sort}) {
+     return productDao.ProdSort(type,key,sort)
   }
 }

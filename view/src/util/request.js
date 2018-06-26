@@ -23,10 +23,10 @@ const request = (option) => {
                 setTimeout(() => {
                     location.href = '/'
                 }, 2000)
-                throw new Error(resu.errMSg)
+                throw new Error(resu.errMsg)
             }
             else if (resu && resu.code == '-1') {
-                throw new Error(resu.errMSg)
+                throw new Error(resu.errMsg)
             }
         }
         else{

@@ -28,6 +28,7 @@ export class ProdTypeController {
         errMsg: "网络错误"
       })
     }
+  }
     /**
    * 产品排序
    *
@@ -37,18 +38,19 @@ export class ProdTypeController {
    */
     @Post('/getprodsort')
     async getProdSort (ctx,next) {
-      try {
+     // try {
         let param = JSON.parse(ctx.request.body.param)
-        let data = productService.getProdList(param)
-        let
-      } catch (error) {
+        let data = await prodTypeService.prodSort(param)
         ctx.body = new Result({
-          code: '-1',
-          errMsg: '网络错误'
+          code: '0',
+          data
         })
-      }
+      // } catch (error) {
+      //   ctx.body = new Result({
+      //     code: '-1',
+      //     errMsg: '网络错误'
+      //   })
+      // }
      
     }
-
-  }
 }

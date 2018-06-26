@@ -52,15 +52,17 @@ export class ProductDao extends BaseDao {
      * @memberof ProductDao
      */
     async ProdSort (type,key,sort) {
-        let key ={
+        let keys ={
             '01':'meta.createdAt',
             '02':'start',
             '03':'price'
         }
         //排序字段
-        let field = key[key]
-        let querSort = {}
-        querSort[field] = sort
+        let field = keys[key]
+        let querSort = {
+            sort:{}
+        }
+        querSort["sort"][field] = sort || 'desc'
         return new Promise((resolve,rej) =>{
             ProductModel.find({
                 type:{

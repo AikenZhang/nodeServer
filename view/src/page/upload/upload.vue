@@ -107,9 +107,6 @@ export default {
         if (i == 'color') {
           temp[i] = me._Format(me.validateForm[i],me.color)
         }
-        if (i == 'type') {
-          temp[i] = me._Format(me.validateForm[i],me.type)
-        }
       }
       formData.append("fields",JSON.stringify(temp))
       for (let i in files) {
@@ -164,7 +161,7 @@ export default {
   mounted () {
     let me = this
     request({
-      url: 'product/getprodinfo'
+      url: 'product/product/getprodinfo'
     }).then((result) => {
       if (result && result.code == '0') {
          let data = result.data

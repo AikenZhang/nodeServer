@@ -19,7 +19,7 @@ export class UserController {
     }else{
       ctx.body = new Result({
         code: '-1',
-        errMSg: '账号/密码错误'
+        errMsg: '账号/密码错误'
       })
     }
   }catch(e){
@@ -38,7 +38,7 @@ export class UserController {
     if (result && result.code == '-1') {
       ctx.body = new Result({
         code: '-1',
-        errMSg: result.errMsg
+        errMsg: result.errMsg
       })
     }else {
       ctx.body = new Result({

@@ -74,19 +74,19 @@ export class UserController {
      */
     @Post('/getinfobyuserid')
     async getInfoByUserId (ctx,next) {
-        //try {
+        try {
             let param = JSON.parse(ctx.request.body.param)
             let data = await userService.getUserInfo(param.userId)
             ctx.body = new Result({
                 code: '0',
                 data
             })
-        // }catch(e){
-        //     ctx.body = new Result({
-        //         code: '-1',
-        //         errMsg: '网络错误'
-        //     })
-        // }
+        }catch(e){
+            ctx.body = new Result({
+                code: '-1',
+                errMsg: '网络错误'
+            })
+        }
     }
  
    
