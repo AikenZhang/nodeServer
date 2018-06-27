@@ -20,7 +20,7 @@ export class ProdTypeService {
    * sort 排序方式
    * @memberof ProdTypeService
    */
-  async prodSort ({type,key,sort}) {
-     return productDao.ProdSort(type,key,sort)
+  async prodSort (param) {
+     return productDao.ProdSort(param)
   }
 }

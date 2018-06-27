@@ -51,7 +51,8 @@ export class ProductDao extends BaseDao {
      * @returns
      * @memberof ProductDao
      */
-    async ProdSort (type,key,sort) {
+    async ProdSort (param) {
+        let { type, key, sort, page, pageSize} = param
         let keys ={
             '01':'meta.createdAt',
             '02':'start',
@@ -59,19 +60,20 @@ export class ProductDao extends BaseDao {
         }
         //排序字段
         let field = keys[key]
-        let querSort = {
+
+        let querSort = [{
+            type:{
+                "$in":type
+            },
+            is_vaild:'0'
+        },null,{
             sort:{}
-        }
-        querSort["sort"][field] = sort || 'desc'
+        }]
+        querSort[2]["sort"][field] = sort || 'desc'
         return new Promise((resolve,rej) =>{
-            ProductModel.find({
-                type:{
-                    "$in":type
-                },
-                is_vaild:'0'
-            },null,querSort,(er,doc) => {
-                if (!er) resolve(doc)
-                else rej(er)
+            this.pageQuery(ProductModel,querSort,page,pageSize).exec((err,doc) => {
+                if(!err) resolve(doc)
+                else rej(err)
             })
         })
     }

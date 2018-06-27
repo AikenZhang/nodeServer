@@ -21,7 +21,7 @@ export class ProductController {
      */
     @Post('/getprolist')
     async getProductList(ctx, next) {
-        let param = ctx.request.body.param
+        let param =JSON.parse(ctx.request.body.param)
         try {
             let proList = await productService.getProdList(param)
             ctx.response.body = new Result({
