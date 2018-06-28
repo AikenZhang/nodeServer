@@ -138,6 +138,25 @@ export class UserController {
        }
    
    }
+   //新增收货地址
+   @Post('/addAddress')
+   async addAddress (ctx,next) {
+    try{
+        let param = JSON.parse(ctx.request.body.param)
+        let openId = ctx.request.token.openId
+        let data =userService.addAddress(param,openId)
+        ctx.body = new Result({
+            code: '0',
+            data:data
+        })
+    }catch(e){
+        ctx.body = new Result({
+            code: '-1',
+            data: "网络错误"
+        })
+    }
+    
+   }
     /**
      * 获取商户的信息
      *

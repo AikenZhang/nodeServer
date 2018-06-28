@@ -2,10 +2,6 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const addressInfoSchema = new Schema({
-    id:{
-        type:String,
-        required:true
-    },
     //用户Id
     userId:{
         type:String,

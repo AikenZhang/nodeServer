@@ -42,7 +42,7 @@ export class AddressInfoDao {
    */
   async updateAddress(param, openId) {
     if (param.default == '1') {
-      return new Promise((resolve,rej) => {
+      return new Promise((resolve, rej) => {
         addressModel.updateMany({
           userId: openId,
           is_vaild: '0'
@@ -72,7 +72,7 @@ export class AddressInfoDao {
         })
       })
     } else {
-      return new Promise((resolve,rej) => {
+      return new Promise((resolve, rej) => {
         addressModel.update({
           _id: param.id,
           is_vaild: '0'
@@ -99,19 +99,46 @@ export class AddressInfoDao {
    * @returns
    * @memberof AddressInfoDao
    */
-  async deleteAddress (id) {
-    return new Promise((resolve,rej) => {
+  async deleteAddress(id) {
+    return new Promise((resolve, rej) => {
       addressModel.update({
-        _id:id,
-        is_vaild:'0'
-      },{
-        $set:{
+        _id: id,
+        is_vaild: '0'
+      }, {
+        $set: {
           is_vaild: '1'
         }
-      },(err,doc) => {
-        if(!err) resolve(doc)
+      }, (err, doc) => {
+        if (!err) resolve(doc)
         else rej(err)
       })
+    })
+  }
+  //添加收货地址
+  async addAddress(param, openId) {
+    return new Promise((resolve, rej) => {
+      if (param.default == '1') {
+        addressModel.updateMany({
+          userId: openId,
+          is_vaild: '0'
+        }, {
+          $set: {
+            default: '0'
+          }
+        }, (err, doc) => {})
+      }
+      addressModel.insertMany({
+        userId: openId,
+        is_vaild: '0',
+        name: param.name,
+        tel: param.tel,
+        address: param.address,
+        default: param.default
+      }, (err, doc) => {
+        if (!err) resolve(doc)
+        else rej(err)
+      })
+
     })
   }
 }

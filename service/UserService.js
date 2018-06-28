@@ -70,6 +70,10 @@ export class UserService {
    async deleteAddress (id) {
         return addressInfoDao.deleteAddress(id)
    }
+   //添加收货地址
+   async addAddress (param,openId) {
+    return addressInfoDao.addAddress(param,openId)
+   }
     //获取用的收藏
     async getCollect (prodId,openId) {
         return collectDao.getCollect(prodId,openId)
