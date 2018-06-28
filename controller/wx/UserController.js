@@ -66,7 +66,78 @@ export class UserController {
             data
         })
     }
+   /**
+    * 获取地址通过Id
+    *
+    * @param {*} ctx
+    * @param {*} next
+    * @memberof UserController
+    */
+   @Post('/getaddressbyid')
+   async getAddressById (ctx,next) {
+       try{
+        let param = JSON.parse(ctx.request.body.param)
+        let data =await userService.getAddressById(param.id)
+        ctx.body = new Result({
+            code: '0',
+            data
+        })
+       }catch(e){
+           ctx.body = new Result({
+               code:'-1',
+               errMsg: '网络错误'
+           })
+       }
+     
+   }
+   /**
+    * 更新收货地址
+    *
+    * @memberof UserController
+    */
+   @Post('/updateaddress')
+   async updateAddress (ctx,next) {
+       try{
+        let param = JSON.parse(ctx.request.body.param)
+        let openId = ctx.request.token.openId
+        let data = await userService.updateAddress(param,openId)
+        ctx.body = new Result({
+            code: '0',
+            data: data
+        })
+       }catch(e){
+         ctx.body = new Result({
+             code: '-1',
+             errMsg: '网络错误'
+         })
+       }
+      
+     
+   }
+   /**
+    *
+    *删除 收货地址
+    * @param {*} ctx
+    * @param {*} next
+    * @memberof UserController
+    */
+   @Post('/deleteaddress')
+   async deleteAddress (ctx,next) {
+       try{
+        let param = JSON.parse(ctx.request.body.param)
+        let data = await userService.deleteAddress(param.id)
+        ctx.body = new Result({
+            code: '0',
+            data: data
+        })
+       }catch(e){
+        ctx.body = new Result({
+            code: '-1',
+            errMsg: '网络错误'
+        })
+       }
    
+   }
     /**
      * 获取商户的信息
      *

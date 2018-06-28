@@ -29,7 +29,7 @@ const addressInfoSchema = new Schema({
         type:String
     },
     //是否默认
-    is_default:{
+    default:{
         type:String,
         default: '0' // 0: 不默认 1: 默认
     },

@@ -47,7 +47,29 @@ export class UserService {
     async getAddress (openId) {
         return addressInfoDao.getAddress(openId)
     }
+   /**
+    * 通过Id获取详细地址
+    *
+    * @param {*} id
+    * @memberof UserService
+    */
+   async getAddressById (id) {
+       return addressInfoDao.getAddressById(id)
+   }
+   //更新收货地址
+   async updateAddress (param,openId) {
+      return addressInfoDao.updateAddress(param,openId)
+   }
 
+   /**
+    * 删除收货地址
+    *
+    * @param {*} id
+    * @memberof UserService
+    */
+   async deleteAddress (id) {
+        return addressInfoDao.deleteAddress(id)
+   }
     //获取用的收藏
     async getCollect (prodId,openId) {
         return collectDao.getCollect(prodId,openId)
