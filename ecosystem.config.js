@@ -36,7 +36,7 @@ module.exports = {
       repo : 'git@github.com:AikenZhang/nodeServer.git',
       path : '~/nodeServer/nodeServer',
       ssh_options:"StrictHostKeyChecking=no",
-      'post-deploy': 'git pull origin master && npm install && pm2 startOrRestart ecosystem.config.js --env production',
+      'post-deploy': 'git pull && npm install && pm2 startOrRestart ecosystem.config.js --env production',
       env: {
 				NODE_ENV:"production"
 			}
