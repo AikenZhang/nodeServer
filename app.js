@@ -1,3 +1,5 @@
+require('babel-core/register')()
+require('babel-polyfill')
 const Koa = require('koa')
 const R = require('ramda')
 const { resolve } = require('path')
