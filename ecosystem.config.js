@@ -31,22 +31,26 @@ module.exports = {
   deploy : {
     production : {
       user : 'root',
-      host : '58.87.72.54',
+      host : ['58.87.72.54'],
       ref  : 'origin/master',
       repo : 'git@github.com:AikenZhang/nodeServer.git',
       path : '~/nodeServer/nodeServer',
-      'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env production'
-    },
-    dev : {
-      user : 'node',
-      host : '212.83.163.1',
-      ref  : 'origin/master',
-      repo : 'git@github.com:repo.git',
-      path : '/var/www/development',
-      'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env dev',
-      env  : {
-        NODE_ENV: 'dev'
-      }
+      "ssh_options":"StrictHostKeyChecking=no",
+      'post-deploy' : 'npm install && pm2 start app.js --env production',
+      "env": {
+				"NODE_ENV":"production"
+			}
     }
+    // dev : {
+    //   user : 'node',
+    //   host : '212.83.163.1',
+    //   ref  : 'origin/master',
+    //   repo : 'git@github.com:repo.git',
+    //   path : '/var/www/development',
+    //   'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env dev',
+    //   env  : {
+    //     NODE_ENV: 'dev'
+    //   }
+    // }
   }
 };
