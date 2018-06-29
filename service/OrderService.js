@@ -74,11 +74,11 @@ export class OrderService {
      * @param {*} type  1: 未支付 2：未收货 3：全部
      * @memberof OrderService
      */
-    async getOrder (openId,type) {
-        switch (type) {
-          case '1': return orderDao.getPayNo(openId);break;
-          case '2': return orderDao.getShipNo(openId);break;
-          case '3': return orderDao.getOrder(openId);break;
+    async getOrder (openId,param) {
+        switch (param.type) {
+          case '1': return orderDao.getPayNo(openId,param);break;
+          case '2': return orderDao.getShipNo(openId,param);break;
+          case '3': return orderDao.getOrder(openId,param);break;
           default: return Promise.reject('没有此类型')
         }
     }

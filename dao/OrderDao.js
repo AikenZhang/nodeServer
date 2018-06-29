@@ -1,7 +1,9 @@
+const { BaseDao } =require('./BaseDao')
+
 const mongoose = require('mongoose')
 
 let orderModel = mongoose.model('fy_orders')
-export class OrderDao {
+export class OrderDao extends BaseDao {
   /**
    * 插入订单
    *
@@ -22,19 +24,22 @@ export class OrderDao {
    * @param {*} openId
    * @memberof OrderDao
    */
-  async getPayNo (openId) {
+  async getPayNo (openId,param) {
     return new Promise((resolve,rej) =>{
-      orderModel.find({
-        openId,
-        is_vaild: '0',
-        is_pay: '0',
-        is_ship: '0',
-        is_end: '0'
-      },null,{
-        sort: {
-          "meta.createdAt":"desc"
-       }
-      },(err,doc) => {
+      let query =[{
+          openId,
+          is_vaild: '0',
+          is_pay: '0',
+          is_ship: '0',
+          is_end: '0'
+        },
+        null,{
+          sort: {
+            "meta.createdAt":"desc"
+         }
+        }]
+      this.pageQuery(orderModel,query,param.page,param.pageSize)
+      .exec((err,doc) =>{
         if (!err) resolve(doc)
         else rej(err)
       })
@@ -47,22 +52,24 @@ export class OrderDao {
    * @returns
    * @memberof OrderDao
    */
-  async getShipNo (openId) {
+  async getShipNo (openId,param) {
     return new Promise((resolve,rej) =>{
-      orderModel.find({
-        openId,
-        is_vaild: '0',
-        is_pay: '1',
-        is_ship: '1',
-        is_end: '0'
-      },null,{
-        sort: {
-          "meta.createdAt":"desc"
-       }
-      },(err,doc) => {
-        if (!err) resolve(doc)
-        else rej(err)
-      })
+      let query = [{
+          openId,
+          is_vaild: '0',
+          is_pay: '1',
+          is_ship: '1',
+          is_end: '0'
+        },null,{
+          sort: {
+            "meta.createdAt":"desc"
+         }
+        }]
+        this.pageQuery(orderModel,query,param.page,param.pageSize)
+        .exec((err,doc) =>{
+          if (!err) resolve(doc)
+          else rej(err)
+        })
     })
   }
   
@@ -73,19 +80,21 @@ export class OrderDao {
    * @returns
    * @memberof OrderDao
    */
-  async getOrder (openId) {
+  async getOrder (openId,param) {
     return new Promise((resolve,rej) =>{
-      orderModel.find({
-        openId,
-        is_vaild: '0'
-      },null,{
-        sort: {
-          "meta.createdAt":"desc"
-       }
-      },(err,doc) => {
-        if (!err) resolve(doc)
-        else rej(err)
-      })
+      let query =[{
+          openId,
+          is_vaild: '0'
+        },null,{
+          sort: {
+            "meta.createdAt":"desc"
+         }
+        }]
+        this.pageQuery(orderModel,query,param.page,param.pageSize)
+        .exec((err,doc) =>{
+          if (!err) resolve(doc)
+          else rej(err)
+        })
     })
   }
   //确认收货

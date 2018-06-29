@@ -13,7 +13,7 @@ export class ProductController {
      */
     @Post('/addorder')
     async addOrder (ctx,next) {
-    // try {
+     try {
         let openId = ctx.request.token.openId
         let param =JSON.parse(ctx.request.body.param)
         let result = await orderService.addOrder(param,openId)
@@ -29,12 +29,12 @@ export class ProductController {
                 data:result.data
             })
         }
-    // }catch(e) {
-    //     ctx.body = new Result({
-    //         code: '-1',
-    //         errMsg: '网络错误'
-    //     })
-    // }
+    }catch(e) {
+        ctx.body = new Result({
+            code: '-1',
+            errMsg: '网络错误'
+        })
+    }
     }
      /**
      * 用户获取订单
@@ -48,7 +48,7 @@ export class ProductController {
         //try{
             let openId = ctx.request.token.openId
             let param = JSON.parse(ctx.request.body.param)
-            let result = await orderService.getOrder(openId,param.type)
+            let result = await orderService.getOrder(openId,param)
             ctx.body = new Result({
                 code: '0',
                 data:result
