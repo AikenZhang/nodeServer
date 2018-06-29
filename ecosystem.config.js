@@ -35,10 +35,10 @@ module.exports = {
       ref  : 'origin/master',
       repo : 'git@github.com:AikenZhang/nodeServer.git',
       path : '~/nodeServer/nodeServer',
-      "ssh_options":"StrictHostKeyChecking=no",
-      'post-deploy' : 'npm install && pm2 start app.js --env production',
-      "env": {
-				"NODE_ENV":"production"
+      ssh_options:"StrictHostKeyChecking=no",
+      'post-deploy': 'git pull origin master && npm install && pm2 startOrRestart ecosystem.config.js --env production',
+      env: {
+				NODE_ENV:"production"
 			}
     }
     // dev : {
