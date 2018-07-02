@@ -45,7 +45,7 @@ export class ProductController {
      */
     @Post('/getorder')
     async getPay (ctx,next) {
-        //try{
+        try{
             let openId = ctx.request.token.openId
             let param = JSON.parse(ctx.request.body.param)
             let result = await orderService.getOrder(openId,param)
@@ -53,12 +53,29 @@ export class ProductController {
                 code: '0',
                 data:result
            })
-        // }catch(e){
-        //     ctx.body = new Result({
-        //         code: '-1',
-        //         errMsg: '网络错误'
-        //     })
-        // }
+        }catch(e){
+            ctx.body = new Result({
+                code: '-1',
+                errMsg: '网络错误'
+            })
+        }
+    }
+
+    /**
+     * 删除订单
+     *
+     * @param {*} ctx
+     * @param {*} next
+     * @memberof ProductController
+     */
+    @Post('/deleteorder')
+    async deleteOrder(ctx,next) {
+        let id = JSON.parse(ctx.request.body.param).id
+        let data = orderService.deleteOrder(id)
+        ctx.body = new Result({
+            code: '0',
+            data: data
+        })
     }
     //确认收货
     @Post('/receiptOrder')

@@ -116,4 +116,20 @@ export class OrderDao extends BaseDao {
     })
     
   }
+
+  async deleteOrder(id) {
+    return new Promise((resolve,rej) =>{
+      orderModel.update({
+        _id:id,
+        is_vaild: '0'
+      },{
+        $set:{
+          is_vaild: '1'
+        }
+      },(err,doc) => {
+        if(!err) resolve(doc)
+        else rej(err)
+      })
+    })
+  }
 }
