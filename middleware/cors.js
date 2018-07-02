@@ -3,7 +3,7 @@ const { appConfig } = require('../appConfig.js')
 export const cors = () => {
     return corsd({
         origin: function (ctx) {
-            return '*'
+            return 'fashionserver.zhangguangh.cn'
         },
         exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
         maxAge: 5,
