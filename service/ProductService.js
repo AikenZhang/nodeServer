@@ -68,9 +68,17 @@ export class ProductService {
     async deleteShopCar (prodId,openId) {
         return shopCarDao.deleteShopCar(prodId,openId)
     }
-    //获取收藏
-    async getCollect (prodId,openId) {
-        return collectDao.getCollect(prodId,openId)
+    //获取收藏状态
+    async getCollectById (prodId,openId) {
+        return collectDao.getCollectById(prodId,openId)
+    }
+    /**
+     * 获取收藏
+     *
+     * @memberof ProductService
+     */
+    async getCollect (param,openId) {
+        return collectDao.getCollect(param,openId)
     }
     //更新收藏状态
     async updateCollect (param,openId) {
@@ -80,5 +88,16 @@ export class ProductService {
         }else {
           return collectDao.addCollect(param.id,openId)
         }
+    }
+
+    /**
+     * 删除收藏
+     *
+     * @param {*} prodId
+     * @param {*} openId
+     * @memberof ProductService
+     */
+    async deleteCollect(prodId,openId) {
+        return collectDao.deleteCollect(prodId,openId)
     }
 }

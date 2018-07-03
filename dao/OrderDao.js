@@ -1,4 +1,6 @@
-const { BaseDao } =require('./BaseDao')
+const {
+  BaseDao
+} = require('./BaseDao')
 
 const mongoose = require('mongoose')
 
@@ -10,7 +12,7 @@ export class OrderDao extends BaseDao {
    * @param {Object} param
    * @memberof OrderDao
    */
-  async addOrder (param) {
+  async addOrder(param) {
     return new Promise((resolve, rej) => {
       orderModel.insertMany(param, (err, doc) => {
         if (!err) resolve(doc)
@@ -24,55 +26,46 @@ export class OrderDao extends BaseDao {
    * @param {*} openId
    * @memberof OrderDao
    */
-  async getPayNo (openId,param) {
-    return new Promise((resolve,rej) =>{
-      let query =[{
+  async getPayNo(openId, param) {
+      let aggregate = [{
+        $match:{
           openId,
           is_vaild: '0',
           is_pay: '0',
           is_ship: '0',
           is_end: '0'
-        },
-        null,{
-          sort: {
-            "meta.createdAt":"desc"
-         }
-        }]
-      this.pageQuery(orderModel,query,param.page,param.pageSize)
-      .exec((err,doc) =>{
-        if (!err) resolve(doc)
-        else rej(err)
-      })
-    })
+        }
+      },{
+        $sort:{
+          "meta.createdAt": -1
+        }
+      }]
+     return this.pageQuery(orderModel, aggregate, param.page, param.pageSize)
   }
-   
+
   /**
    * 用户获取未收货订单
    *
    * @returns
    * @memberof OrderDao
    */
-  async getShipNo (openId,param) {
-    return new Promise((resolve,rej) =>{
-      let query = [{
+  async getShipNo(openId, param) {
+      let aggregate = [{
+        $match: {
           openId,
           is_vaild: '0',
           is_pay: '1',
           is_ship: '1',
           is_end: '0'
-        },null,{
-          sort: {
-            "meta.createdAt":"desc"
-         }
-        }]
-        this.pageQuery(orderModel,query,param.page,param.pageSize)
-        .exec((err,doc) =>{
-          if (!err) resolve(doc)
-          else rej(err)
-        })
-    })
+        }
+      },{
+        $sort:{
+          "meta.createdAt": -1
+        }
+      }]
+     return this.pageQuery(orderModel, aggregate, param.page, param.pageSize)
   }
-  
+
   /**
    * 用户获取全部订单
    *
@@ -80,54 +73,51 @@ export class OrderDao extends BaseDao {
    * @returns
    * @memberof OrderDao
    */
-  async getOrder (openId,param) {
-    return new Promise((resolve,rej) =>{
-      let query =[{
-          openId,
-          is_vaild: '0'
-        },null,{
-          sort: {
-            "meta.createdAt":"desc"
-         }
-        }]
-        this.pageQuery(orderModel,query,param.page,param.pageSize)
-        .exec((err,doc) =>{
-          if (!err) resolve(doc)
-          else rej(err)
-        })
-    })
+  async getOrder(openId, param) {
+
+    let aggregate = [{
+      $match: {
+        openId,
+        is_vaild: '0'
+      }
+    }, {
+      $sort: {
+        "meta.createdAt": -1
+      }
+    }]
+    return this.pageQuery(orderModel, aggregate, param.page, param.pageSize)
   }
   //确认收货
-  async receiptOrder (_id) {
-    return new Promise((resolve,rej) => {
+  async receiptOrder(_id) {
+    return new Promise((resolve, rej) => {
       orderModel.update({
         _id,
         is_vaild: '0',
         is_pay: '1',
         is_ship: '1'
-      },{
-        $set:{
-          is_end:'1'
+      }, {
+        $set: {
+          is_end: '1'
         }
-      },(err,doc) => {
-        if(!err) resolve(doc)
+      }, (err, doc) => {
+        if (!err) resolve(doc)
         else rej(err)
       })
     })
-    
+
   }
 
   async deleteOrder(id) {
-    return new Promise((resolve,rej) =>{
+    return new Promise((resolve, rej) => {
       orderModel.update({
-        _id:id,
+        _id: id,
         is_vaild: '0'
-      },{
-        $set:{
+      }, {
+        $set: {
           is_vaild: '1'
         }
-      },(err,doc) => {
-        if(!err) resolve(doc)
+      }, (err, doc) => {
+        if (!err) resolve(doc)
         else rej(err)
       })
     })

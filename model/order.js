@@ -88,6 +88,7 @@ const OrderSchema = new Schema({
 })
 //添加虚拟字段 1 表示未支付  2 表示 未收货  3  表示完成
 OrderSchema.virtual('mode').get(function () {
+    
     if (this.is_pay == '0' && this.is_vaild == '0' && this.is_ship== '0' && this.is_end == '0' ) {
         return '1'
     }else if (this.is_pay == '1' && this.is_ship == '1' && this.is_vaild == '0' && this.is_end == '0') {

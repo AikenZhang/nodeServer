@@ -8,6 +8,7 @@ const bodyParser = require('koa-bodyparser')
 const { Interception } = require('./common/Interception.js')
 const MIDDLEWARE = ['router']
 const { cors } = require('./middleware/cors.js')
+const view = require('koa-static')
 const useMiddleWares = (app) => {
     R.map(
         R.compose(
@@ -31,9 +32,12 @@ const useMiddleWares = (app) => {
     //添加body 解析
     app.use(bodyParser())
     //挂载请求拦截
-    app.use(Interception())
+   app.use(Interception())
     // 挂载修饰符解析器
-    await useMiddleWares(app)
+   await useMiddleWares(app)
+   app.use(view(
+   resolve( __dirname,  './view/dist')
+  ))
     app.listen(3345)
     console.log('starting in listen 3345')
 })()

@@ -25,7 +25,6 @@ export class ProductDao extends BaseDao {
                 })
             })
         }else {
-            return new Promise((resolve,rej) =>{
                 let query = [{
                     is_vaild: '0',
                 },null,{
@@ -33,12 +32,18 @@ export class ProductDao extends BaseDao {
                        "meta.createdAt":"desc"
                     }
                 }]
-                this.pageQuery(ProductModel,query,param.page,param.pageSize)
-                .exec((err,doc) =>{
-                    if (!err) resolve(doc)
-                    else rej(err)
-                })
-            })
+                let aggregate = [
+                    {
+                        $match:{
+                            is_vaild:'0'
+                        }
+                    },{
+                        $sort:{
+                            "meta.createdAt":-1
+                        }
+                    }
+                ]
+               return this.pageQuery(ProductModel,aggregate,param.page,param.pageSize)
         }
     }
 
@@ -61,21 +66,30 @@ export class ProductDao extends BaseDao {
         //排序字段
         let field = keys[key]
 
-        let querSort = [{
-            type:{
-                "$in":type
-            },
-            is_vaild:'0'
-        },null,{
-            sort:{}
-        }]
-        querSort[2]["sort"][field] = sort || 'desc'
-        return new Promise((resolve,rej) =>{
-            this.pageQuery(ProductModel,querSort,page,pageSize).exec((err,doc) => {
-                if(!err) resolve(doc)
-                else rej(err)
-            })
-        })
+        // let querSort = [{
+        //     type:{
+        //         "$in":type
+        //     },
+        //     is_vaild:'0'
+        // },null,{
+        //     sort:{}
+        // }]
+        //querSort[2]["sort"][field] = sort || 'desc'
+        let aggregate = [
+            {
+               $match:{
+                type:{
+                    "$in":[type]
+                },
+                is_vaild: '0'
+               }
+            },{
+                $sort:{
+                }
+            }
+        ]
+        aggregate[1]["$sort"][field] = sort || -1
+        return this.pageQuery(ProductModel,aggregate,param.page,param.pageSize)
     }
     /**
      *添加商品信息

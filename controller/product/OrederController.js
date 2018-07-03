@@ -45,7 +45,7 @@ export class ProductController {
      */
     @Post('/getorder')
     async getPay (ctx,next) {
-        try{
+        //try{
             let openId = ctx.request.token.openId
             let param = JSON.parse(ctx.request.body.param)
             let result = await orderService.getOrder(openId,param)
@@ -53,12 +53,12 @@ export class ProductController {
                 code: '0',
                 data:result
            })
-        }catch(e){
-            ctx.body = new Result({
-                code: '-1',
-                errMsg: '网络错误'
-            })
-        }
+        // }catch(e){
+        //     ctx.body = new Result({
+        //         code: '-1',
+        //         errMsg: '网络错误'
+        //     })
+        // }
     }
 
     /**

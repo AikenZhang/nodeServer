@@ -22,7 +22,7 @@ export class ProductController {
     @Post('/getprolist')
     async getProductList(ctx, next) {
         let param =JSON.parse(ctx.request.body.param)
-        try {
+       try {
             let proList = await productService.getProdList(param)
             ctx.response.body = new Result({
                 code: '0',
@@ -174,18 +174,18 @@ export class ProductController {
         } 
     }
     /**
-     * 确实商品是否为收藏商
+     * 确认商品是否为收藏商
      *
      * @param {*} ctx
      * @param {*} next
      * @memberof ProductController
      */
-    @Post('/getCollect')
-    async getCollect(ctx,next) {
+    @Post('/getCollectbyid')
+    async getCollectById(ctx,next) {
         try {
         let openId = ctx.request.token.openId
         let param = JSON.parse(ctx.request.body.param)
-        let result = await productService.getCollect(param.id,openId)
+        let result = await productService.getCollectById(param.id,openId)
         if (result.length > 0) {
             ctx.body =  new Result({
                 code: '0',
@@ -225,8 +225,6 @@ export class ProductController {
                 code: '-1',
                 errMsg: '网络错误'
             })
-        }
-        
-
+        } 
     }
 }

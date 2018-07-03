@@ -6,7 +6,6 @@ const db = appConfig.mongo
 mongoose.Promise = global.Promise 
 
 export const connect = () => {
-    console.log(process.env.NODE_ENV)
     if (process.env.NODE_ENV !== 'production') {
         mongoose.set('debug',true)
     }

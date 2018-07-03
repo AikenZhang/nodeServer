@@ -6,7 +6,8 @@ const { cryptod } = require('./util.js')
 const passArr = [
     '/wx/user/login',
     '/admin/user/login',
-    '/admin/user/registry'
+    '/admin/user/registry',
+    '/view/*'
 ]
 //token签名校验,保证信息的完整性
 const comparToken = (token) => {
@@ -23,6 +24,7 @@ const comparToken = (token) => {
 }
 
 export const Interception = () => async (cxt, next) => {
+    console.log(cxt.request.url)
     if (passArr.indexOf(cxt.request.url) > -1 ) {
         await next()
     }

@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 let collectModel = mongoose.model('fy_collects')
-export class CollectDao {
+const { BaseDao } = require('./BaseDao.js')
+
+export class CollectDao extends BaseDao {
   //添加收藏
   async addCollect(prodId,openId) {
     return new Promise((resolve, rej) => {
@@ -14,7 +16,7 @@ export class CollectDao {
     })
   }
   //获取收藏
-  async getCollect (prodId,openId) {
+  async getCollectById (prodId,openId) {
       return new Promise((resolve,rej) => {
         if(prodId) {
             collectModel.find({
@@ -45,5 +47,30 @@ export class CollectDao {
             else rej(err)
         })
     })
+  }
+
+  /**
+   * 获取收藏
+   *
+   * @param {*} openId
+   * @memberof CollectDao
+   */
+  async getCollect(param,openId) {
+      let aggregate = [
+          {
+            $match:{
+                openId
+            }
+          },{
+            $lookup:
+              {
+                from:'fy_products',
+                localField:'id',
+                foreignField: 'id',
+                as: 'productInfo'
+              }
+         }
+      ]
+    return this.pageQuery(collectModel,aggregate,param.page,param.pageSize)
   }
 }

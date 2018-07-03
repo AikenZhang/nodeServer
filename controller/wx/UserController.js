@@ -2,10 +2,12 @@ import { OrderService } from '../../service/OrderService.js';
 
 const { Controller,Get,Post, Log} = require('../BaseController.js')
 const { UserService } = require('../../service/UserService.js')
+const { ProductService } = require('../../service/ProductService.js')
 const { Result } = require('../../common/Result.js')
 const { createToken , getOpenId,deToken} = require('../../common/MiniPro.js') 
 const userService = new UserService()
 const orderService = new OrderService()
+const productService = new ProductService()
 @Controller('/wx/user')
 export class UserController {
     //用户登陆
@@ -178,6 +180,54 @@ export class UserController {
             })
         }
     }
- 
-   
+
+    /**
+     * 获取收藏
+     *
+     * @memberof UserController
+     */
+    @Post('/getcollect')
+    async getCollect(ctx,next) {
+        try{
+            let openId = ctx.request.token.openId
+            let param = JSON.parse(ctx.request.body.param)
+            let data =await productService.getCollect(param,openId)
+            console.log(data)
+            ctx.body = new Result({
+                code: '0',
+                data
+            })
+        }catch(e){
+            ctx.body = new Result({
+                code: '0',
+                errMsg: '网络错误'
+            })
+        }
+        
+    }
+
+    /**
+     * 删除收藏
+     *
+     * @memberof UserController
+     */
+    @Post('/deletecollect')
+    async deleteCollect(ctx,next) {
+       // try{
+            let openId = ctx.request.token.openId
+            let param = JSON.parse(ctx.request.body.param)
+            let data = await productService.deleteCollect(param.id,openId)
+            ctx.body = new Result({
+                code: '0',
+                data
+            })
+        // }catch(e){
+        //     ctx.body = new Result({
+        //         code: '-1',
+        //         errMsg: '网络错误'
+        //     })
+        // }
+       
+        
+    }
 }
