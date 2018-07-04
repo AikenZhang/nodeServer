@@ -90,8 +90,8 @@ export class OrderService {
      * @returns
      * @memberof OrderService
      */
-    async receiptOrder (_id) {
-      return orderDao.receiptOrder(_id)
+    async receiptOrder (id) {
+      return orderDao.receiptOrder(id)
     }
 
     /**

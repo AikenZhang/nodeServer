@@ -35,7 +35,6 @@ export class UserController {
     async getUserInfo (cxt,next) {
         try{
             let token = cxt.request.token
-        console.log(cxt.request)
         let data =await userService.getUserInfo(token.openId)
         if (data) {
             cxt.body = new Result({
@@ -192,7 +191,6 @@ export class UserController {
             let openId = ctx.request.token.openId
             let param = JSON.parse(ctx.request.body.param)
             let data =await productService.getCollect(param,openId)
-            console.log(data)
             ctx.body = new Result({
                 code: '0',
                 data
@@ -213,7 +211,7 @@ export class UserController {
      */
     @Post('/deletecollect')
     async deleteCollect(ctx,next) {
-       // try{
+       try{
             let openId = ctx.request.token.openId
             let param = JSON.parse(ctx.request.body.param)
             let data = await productService.deleteCollect(param.id,openId)
@@ -221,12 +219,12 @@ export class UserController {
                 code: '0',
                 data
             })
-        // }catch(e){
-        //     ctx.body = new Result({
-        //         code: '-1',
-        //         errMsg: '网络错误'
-        //     })
-        // }
+        }catch(e){
+            ctx.body = new Result({
+                code: '-1',
+                errMsg: '网络错误'
+            })
+        }
        
         
     }

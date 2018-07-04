@@ -82,7 +82,7 @@ export class ProductController {
     async receiptOrder (ctx,next) {
         try{
             let param = JSON.parse(ctx.request.body.param)
-            await orderService.receiptOrder(param._id)
+            await orderService.receiptOrder(param.id)
             ctx.body = new Result({
                 code: '0'
             })

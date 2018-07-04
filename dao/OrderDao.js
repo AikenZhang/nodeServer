@@ -87,7 +87,14 @@ export class OrderDao extends BaseDao {
     }]
     return this.pageQuery(orderModel, aggregate, param.page, param.pageSize)
   }
-  //确认收货
+
+  /**
+   * 确认收货
+   *
+   * @param {*} _id
+   * @returns
+   * @memberof OrderDao
+   */
   async receiptOrder(_id) {
     return new Promise((resolve, rej) => {
       orderModel.update({
@@ -107,6 +114,13 @@ export class OrderDao extends BaseDao {
 
   }
 
+  /**
+   * 删除订单
+   *
+   * @param {*} id
+   * @returns
+   * @memberof OrderDao
+   */
   async deleteOrder(id) {
     return new Promise((resolve, rej) => {
       orderModel.update({
