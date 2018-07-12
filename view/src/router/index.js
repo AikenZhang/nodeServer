@@ -17,7 +17,6 @@ const router = new Router({
 //全局钩子拦截
 router.beforeEach((to, from, next) => {
   if (passRoute.indexOf(to.fullPath) > -1) {
-    console.log('11')
     next()
   } else {
     if (token.getToken('fy_token')) {

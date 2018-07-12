@@ -1,13 +1,17 @@
-const { Result } = require('./Result.js')
+const { Result } = require('../common/Result.js')
 const { appConfig } = require('../appConfig.js')
-const { deToken } = require('./MiniPro.js')
-const { cryptod } = require('./util.js')
+const { cryptod, deToken } = require('../common/util.js')
 //不需要token验证白名单
 const passArr = [
     '/wx/user/login',
     '/admin/user/login',
     '/admin/user/registry',
-    '/view/*'
+    '/product/product/getprolist'
+]
+//静态文件路径
+const staticArr = [
+    ' ',
+    'static'
 ]
 //token签名校验,保证信息的完整性
 const comparToken = (token) => {
@@ -23,14 +27,18 @@ const comparToken = (token) => {
    
 }
 
-export const Interception = () => async (cxt, next) => {
-    console.log(cxt.request.url)
-    if (passArr.indexOf(cxt.request.url) > -1 ) {
+let interception = async (ctx,next) => {
+    let url = ctx.request.url
+    //await next()
+    if (passArr.indexOf(url) > -1 ) {
+        await next()
+    }
+    else if(url=='/' || url.split('/')[1]=='static'){
         await next()
     }
     else {
          //登录拦截 查看是否带有token
-         const authToken = cxt.request.header['author-token']
+         const authToken = ctx.request.header['author-token']
          let t,token
          if (authToken && authToken !== 'null') {
               //检验token的正确性
@@ -40,14 +48,17 @@ export const Interception = () => async (cxt, next) => {
          //查看是否过期
          if ( !t || token.exp < new Date().getTime()) {
              console.log('登录过期')
-             cxt.body = new Result({
+             ctx.body = new Result({
                  code: '111',
-                 errMSg: '登录过期'
+                 errMsg: '登录过期'
              })
          } else {
-             cxt.request.token = token
+             ctx.request.token = token
              await next()
          }
     }
-   
+}
+
+export const Interception = (app) => {
+    app.use(interception)
 }

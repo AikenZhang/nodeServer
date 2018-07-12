@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-
+const {appConfig} = require('../appConfig.js')
 //公用工具
 export const cryptod = {
     //加密
@@ -9,6 +9,7 @@ export const cryptod = {
         crypted += cipher.final('hex');
         return crypted;
     },
+    //解密
     decrypted: (content, key) => {
         const decipher = crypto.createDecipher('aes192', key);
         var decrypted = decipher.update(content, 'hex', 'utf8');
@@ -25,33 +26,32 @@ export const base64 = {
         return new Buffer(content, 'base64').toString()
     }
 }
-//揭秘用户详细信息
-export const resolveUserData = (sessionKey, appId, encryptedData, iv) => {
-    var sessionKey = new Buffer(sessionKey, 'base64')
-    encryptedData = new Buffer(encryptedData, 'base64')
-    iv = new Buffer(iv, 'base64')
-
-    try {
-        // 解密
-        var decipher = crypto.createDecipheriv('aes-128-cbc', sessionKey, iv)
-        // 设置自动 padding 为 true，删除填充补位
-        decipher.setAutoPadding(true)
-        var decoded = decipher.update(encryptedData, 'binary', 'utf8')
-        decoded += decipher.final('utf8')
-
-        decoded = JSON.parse(decoded)
-
-    } catch (err) {
-        throw new Error('Illegal Buffer')
+//生成token
+export const createToken = (openId) => {
+    //let openId = await getOpenId(code)
+    //过期时间
+    const exp = () => {
+        let nowDate = new Date().getTime()
+        let expTime = 7 * 24 * 60 * 60 * 1000
+        return nowDate + expTime
     }
-
-    if (decoded.watermark.appid !== appId) {
-        throw new Error('Illegal Buffer')
+    let payLoad = {
+        exp: exp(),
+        lat: new Date().getTime(),
+        openId:openId
     }
-
-    return decoded
+    let head = {
+        type: "JWT",
+        alg: "AES"
+    }
+    let enString = base64.enCode(JSON.stringify(head)) + '.' + base64.enCode(JSON.stringify(payLoad))
+    return enString + '.' + cryptod.crypto(enString, appConfig.serviceSecret)
 }
-
+//解析token
+export const deToken = (token) => {
+    return JSON.parse(base64.deCode(token.split('.')[1]))
+}
+//获取唯一Id(数值型)
 export const fyId = () => {
     let random = Math.floor(Math.random()*999) + 0
     return Date.now().toString() + random.toString()

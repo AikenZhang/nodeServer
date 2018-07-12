@@ -103,4 +103,20 @@ export class OrderService {
     async deleteOrder(id) {
       return orderDao.deleteOrder(id)
     }
+    
+    /**
+     * 商户获取订单 
+     *
+     * @param {*} userId
+     * @param {*} param
+     * @memberof OrderService
+     */
+    async adminGetOrder(userId,param) {
+      switch(param.mode){
+        case '1':return orderDao.getNoShip(userId,param);break;
+        case '2':return orderDao.getShipNo(userId,param);break;
+        case '3':return orderDao.getOrder(userId,param);break;
+      }
+       return orderDao.getNoShip(userId,param)
+    }
 }

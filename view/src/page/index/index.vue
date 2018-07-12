@@ -29,7 +29,7 @@ export default {
    background: #f981a7;
  }
  .fy-view {
-   overflow-y: scroll;
+   overflow: scroll;
    height: 100%;
    width:100%;
  }

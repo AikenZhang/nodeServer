@@ -12,9 +12,9 @@
       </div> 
     </div>
     <mu-bottom-nav class="fy-user-order">
-      <mu-bottom-nav-item title="待发货" icon=":iconfont icon-daifahuo"></mu-bottom-nav-item>
-      <mu-bottom-nav-item title="已发货" icon=":iconfont icon-yifahuo"></mu-bottom-nav-item>
-      <mu-bottom-nav-item title="全部订单" icon=":iconfont icon-quanbudingdan01"></mu-bottom-nav-item>
+      <mu-bottom-nav-item title="待发货" icon=":iconfont icon-daifahuo" to="/order?mode=1"></mu-bottom-nav-item>
+      <mu-bottom-nav-item title="已发货" icon=":iconfont icon-yifahuo" to="/order?mode=2"></mu-bottom-nav-item>
+      <mu-bottom-nav-item title="全部订单" icon=":iconfont icon-quanbudingdan01" to="/order?mode=3"></mu-bottom-nav-item>
     </mu-bottom-nav>
     <mu-list>
       <mu-list-item class="fy-list-item" button :ripple="false">

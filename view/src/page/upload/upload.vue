@@ -1,5 +1,6 @@
 <template>
-        <mu-form ref="form" :model="validateForm">
+<div style="width:100%;overflow:hidden;">
+ <mu-form ref="form" :model="validateForm">
         <mu-form-item prop="title" label="产品标题" :rules='rules.textFieldRules' >
           <mu-text-field v-model="validateForm.title" prop="title"></mu-text-field>
         </mu-form-item>
@@ -40,7 +41,8 @@
           <mu-button color="primary" @click="submit">提交</mu-button>
           <mu-button @click="clear">重置</mu-button>
         </div>
-      </mu-form>
+</mu-form>
+</div>  
 </template>
 <script>
 import upload from "@/components/upload";

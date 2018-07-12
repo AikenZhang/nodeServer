@@ -2,7 +2,7 @@
     <div class="fy-imgpreview" @click="close">
         <img :src='src'/>
         <div class="fy-imgpreview-bbar">
-            <i class="fa fa-trash-o" @click="deleteImg"></i>
+            <i class="iconfont icon-msnui-trash" @click="deleteImg"></i>
         </div>
     </div>
 </template>

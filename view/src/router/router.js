@@ -31,5 +31,10 @@ export default [
           component: _import('page/user/user.vue')
         }
        ]
-    }
+    },{
+      path: '/order',
+      name: 'order',
+      props:true,
+      component: _import('page/user/order.vue')
+    },
   ]

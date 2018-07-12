@@ -136,4 +136,28 @@ export class OrderDao extends BaseDao {
       })
     })
   }
+  
+  /**
+   * 获取未发货订单
+   *
+   * @param {*} userId
+   * @param {*} param
+   * @memberof OrderDao
+   */
+  async getNoShip(userId,param) {
+    let aggregate = [{
+      $match: {
+        userId,
+        is_vaild: '0',
+        is_pay: '1',
+        is_ship: '0',
+        is_end: '0'
+      }
+    },{
+      $sort:{
+        "meta.createdAt": -1
+      }
+    }]
+   return this.pageQuery(orderModel, aggregate, param.page, param.pageSize)
+  }
 }

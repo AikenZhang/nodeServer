@@ -13,7 +13,7 @@ config.zone = qiniu.zone.Zone_z1
 let formUploader = new qiniu.form_up.FormUploader(config)
 let putExtra = new qiniu.form_up.PutExtra()
 export class QiNiu {
-    //上传文件
+    //七牛上传接口
     upLoadFile (file,fileName = UUid.v1()+'.jpg') {
         return new Promise((resolve,rej) => {
             formUploader.putStream(uploadToken, fileName, file, putExtra, function(respErr,
