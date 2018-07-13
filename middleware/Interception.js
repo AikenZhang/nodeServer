@@ -22,7 +22,7 @@ const comparToken = (token) => {
         //console.log(signa)
         return cryptod.crypto(rawData, appConfig.serviceSecret) == signa
     }catch(e) {
-       // console.log(e)
+       console.log(e)
     }
    
 }
