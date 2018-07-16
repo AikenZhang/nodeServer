@@ -93,10 +93,8 @@ export default {
     submit () {
       let me = this
       console.log(me.validateForm.files.length)
-      if (!this.$refs.form.validate()){
-        return
-      }
-      let files = me.validateForm.files
+      if (this.$refs.form.validate()){
+              let files = me.validateForm.files
       let formData = new FormData()
       let temp = {}
       for (let i in me.validateForm) {
@@ -130,6 +128,7 @@ export default {
         }
         me.clear()
       })
+      }
     },
     clear () {
       this.validateForm = {
